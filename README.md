@@ -19,17 +19,27 @@ Before you begin, ensure you have the following installed on your machine:
 
 2. **Configure the JDK**:
    Ensure the `JAVA_HOME` environment variable points to your JDK installation directory. For example:
-   ```sh
-   export JAVA_HOME=/path/to/your/jdk
-   ```
+   - On Windows:
+     ```cmd
+     set JAVA_HOME=C:\path\to\your\jdk
+     ```
+   - On Unix-based systems (Linux, macOS):
+     ```sh
+     export JAVA_HOME=/path/to/your/jdk
+     ```
 
 ## Building the Project
 
 To build the project, run the following command in the project's root directory:
 
-```sh
-./gradlew build
-```
+- On Windows:
+  ```cmd
+  gradlew.bat build
+  ```
+- On Unix-based systems (Linux, macOS):
+  ```sh
+  ./gradlew build
+  ```
 
 This command downloads the dependencies, compiles the source code, and runs the tests.
 
@@ -37,9 +47,14 @@ This command downloads the dependencies, compiles the source code, and runs the 
 
 To run the game, use the following command:
 
-```sh
-./gradlew run
-```
+- On Windows:
+  ```cmd
+  gradlew.bat run
+  ```
+- On Unix-based systems (Linux, macOS):
+  ```sh
+  ./gradlew run
+  ```
 
 This command launches the application using the `run` task defined in the `build.gradle` file.
 
