@@ -1,0 +1,19 @@
+Monster
+Name Pikachu
+Type Electric
+HP 110 141
+Speed 110 141
+Attack 75 106
+Defense 50 82
+Paralysis 0.2
+EndMonster
+Monster
+Name Cerapuca
+Type Water
+HP 119 150
+Attack 68 99
+Speed 63 94
+Defense 85 116
+Flood 0.25
+Fall 0.35
+EndMonster
