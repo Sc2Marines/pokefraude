@@ -1,7 +1,7 @@
-package src;
-
+package src.models;
+import src.utils.LecteurFichier;
 import java.util.List;
-
+import src.view.InterfaceConsole;
 public class ControleurJeu {
     private ModeleJeu modeleJeu;
     private InterfaceConsole interfaceConsole;
@@ -20,7 +20,7 @@ public class ControleurJeu {
 
         // Create the game model and user interface
         modeleJeu = new ModeleJeu(monstres, attaques);
-        interfaceConsole = new InterfaceConsole(this, modeleJeu);
+        interfaceConsole = new InterfaceConsole();
 
     }
     public void demarrer(){
@@ -28,8 +28,8 @@ public class ControleurJeu {
 
         while(!modeleJeu.estTermine()){
             // Get the action for each player
-            ModeleJeu.Action actionJoueur1 = interfaceConsole.obtenirActionJoueur(modeleJeu.getJoueur(0));
-            ModeleJeu.Action actionJoueur2 = interfaceConsole.obtenirActionJoueur(modeleJeu.getJoueur(1));
+            Action actionJoueur1 = interfaceConsole.obtenirActionJoueur(modeleJeu.getJoueur(0));
+            Action actionJoueur2 = interfaceConsole.obtenirActionJoueur(modeleJeu.getJoueur(1));
 
             // Execute the actions
             modeleJeu.executerActions(actionJoueur1, actionJoueur2);

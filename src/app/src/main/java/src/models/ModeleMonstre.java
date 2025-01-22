@@ -1,4 +1,4 @@
-package src;
+package src.models;
 
 public class ModeleMonstre {
     private String name;
@@ -11,9 +11,12 @@ public class ModeleMonstre {
     private double flood;
     private double fall;
 
-    public ModeleMonstre(String name, String type, int[] hp, int[] speed, int[] attack, int[] defense, double paralysis, double flood, double fall) {
+    public ModeleMonstre(String name, String type) {
         this.name = name;
         this.type = type;
+    }
+
+    public void populateStats( int[] hp, int[] speed, int[] attack, int[] defense, double paralysis, double flood, double fall){
         this.hp = hp;
         this.speed = speed;
         this.attack = attack;

@@ -1,68 +1,10 @@
-package src;
+package src.models;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModeleJeu {
-
-    public enum ActionType {
-        ATTAQUE,
-        OBJET,
-        CHANGER_MONSTRE
-    }
-
-    public static class Action {
-        private ActionType type;
-        private int index;
-        private ModeleAttaque attaque;
-        private ModeleObjet objet;
-        private ModeleMonstre nouveauMonstre;
-
-        public Action(ActionType type, int index) {
-            this.type = type;
-            this.index = index;
-        }
-
-        public Action(ActionType type, int index, ModeleAttaque attaque) {
-            this.type = type;
-            this.index = index;
-            this.attaque = attaque;
-        }
-
-        public Action(ActionType type, int index, ModeleObjet objet) {
-            this.type = type;
-            this.index = index;
-            this.objet = objet;
-        }
-
-        public Action(ActionType type, int index, ModeleMonstre nouveauMonstre) {
-            this.type = type;
-            this.index = index;
-            this.nouveauMonstre = nouveauMonstre;
-        }
-
-        public ActionType getType() {
-            return type;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public ModeleAttaque getAttaque() {
-            return attaque;
-        }
-
-        public ModeleObjet getObjet() {
-            return objet;
-        }
-
-        public ModeleMonstre getNouveauMonstre() {
-            return nouveauMonstre;
-        }
-    }
-
     private List<ModeleJoueur> joueurs;
     private List<ModeleMonstre> monstresDisponibles;
     private List<ModeleAttaque> attaquesDisponibles;
@@ -106,16 +48,14 @@ public class ModeleJeu {
             joueurs.get(1).changerMonstreActif(actionJoueur2.getIndex());
         }
         // Execute objets
-        if (actionJoueur1.getType() == ActionType.OBJET) {
-            if (actionJoueur1.getObjet() != null) {
+        if (actionJoueur1.getType() == ActionType.OBJET && actionJoueur1.getObjet() != null) {
                 actionJoueur1.getObjet().utiliser(joueurs.get(0).getMonstreActif());
             }
-        }
-        if (actionJoueur2.getType() == ActionType.OBJET) {
-            if (actionJoueur2.getObjet() != null) {
+        
+        if (actionJoueur2.getType() == ActionType.OBJET && actionJoueur2.getObjet() != null) {
                 actionJoueur2.getObjet().utiliser(joueurs.get(1).getMonstreActif());
             }
-        }
+        
         //Execute attacks
         if (actionJoueur1.getType() == ActionType.ATTAQUE && actionJoueur2.getType() == ActionType.ATTAQUE) {
             int initJoueur = getInitiative(joueurs.get(0), joueurs.get(1));

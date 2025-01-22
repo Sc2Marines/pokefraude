@@ -1,17 +1,13 @@
-package src;
+package src.view;
 
-import java.util.List;
 import java.util.Scanner;
+import src.models.*;
 
 public class InterfaceConsole {
-    private ControleurJeu controleurJeu;
-    private ModeleJeu modeleJeu;
     private Scanner scanner;
 
 
-    public InterfaceConsole(ControleurJeu controleurJeu, ModeleJeu modeleJeu) {
-        this.controleurJeu = controleurJeu;
-        this.modeleJeu = modeleJeu;
+    public InterfaceConsole() {
         this.scanner = new Scanner(System.in);
     }
 
@@ -40,7 +36,7 @@ public class InterfaceConsole {
 
     }
 
-    public ModeleJeu.Action obtenirActionJoueur(ModeleJoueur joueur) {
+    public src.models.Action obtenirActionJoueur(ModeleJoueur joueur) {
         System.out.println("Tour du joueur : "+ joueur.getNom() + " Choississez une action :");
         System.out.println("1 : Attaquer");
         System.out.println("2 : Utiliser un objet");
@@ -62,27 +58,27 @@ public class InterfaceConsole {
         }
     }
 
-    private ModeleJeu.Action obtenirActionChangerMonstre(ModeleJoueur joueur) {
+    private src.models.Action obtenirActionChangerMonstre(ModeleJoueur joueur) {
         System.out.println("Choisisez le monstre a utiliser :");
         for(int i = 0; i < joueur.getMonstres().size(); i++){
             System.out.println(" "+i +": "+ joueur.getMonstres().get(i).getNom());
         }
         System.out.print("Votre monstre : ");
         int indexMonstre = scanner.nextInt();
-        return new ModeleJeu.Action(ModeleJeu.ActionType.CHANGER_MONSTRE, indexMonstre);
+        return new Action(ActionType.CHANGER_MONSTRE, indexMonstre);
     }
 
-    private ModeleJeu.Action obtenirActionObjet(ModeleJoueur joueur) {
+    private src.models.Action obtenirActionObjet(ModeleJoueur joueur) {
         System.out.println("Choisisez un objet :");
         for (int i = 0; i< joueur.getObjets().size(); i++){
             System.out.println(" "+i + ": " + joueur.getObjets().get(i).getNom());
         }
         System.out.print("Votre objet : ");
         int indexObjet = scanner.nextInt();
-        return new ModeleJeu.Action(ModeleJeu.ActionType.OBJET, indexObjet, joueur.getObjets().get(indexObjet));
+        return new Action(ActionType.OBJET, indexObjet, joueur.getObjets().get(indexObjet));
     }
 
-    private ModeleJeu.Action obtenirActionAttaquer(ModeleJoueur joueur){
+    private src.models.Action obtenirActionAttaquer(ModeleJoueur joueur){
         Monstre monstreActif = joueur.getMonstreActif();
         System.out.println("Choisisez une attaque :");
         for (int i = 0; i < monstreActif.getAttaques().size(); i++){
@@ -90,6 +86,6 @@ public class InterfaceConsole {
         }
         System.out.print("Votre attaque : ");
        int indexAttaque = scanner.nextInt();
-       return new ModeleJeu.Action(ModeleJeu.ActionType.ATTAQUE, indexAttaque, monstreActif.getAttaques().get(indexAttaque));
+       return new Action(ActionType.ATTAQUE, indexAttaque, monstreActif.getAttaques().get(indexAttaque));
     }
 }

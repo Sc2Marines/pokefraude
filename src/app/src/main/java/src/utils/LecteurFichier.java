@@ -1,4 +1,4 @@
-package src;
+package src.utils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,11 +8,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import src.models.ModeleAttaque;
+import src.models.ModeleMonstre;
+
 public class LecteurFichier {
 
-    //Regex to extract data from the file
+    // Regex to extract data from the file
     private static final Pattern MONSTER_PATTERN = Pattern.compile("Monster.*?EndMonster", Pattern.DOTALL);
-    private static final Pattern ATTACK_PATTERN = Pattern.compile("Attack.*?EndAttack",Pattern.DOTALL);
+    private static final Pattern ATTACK_PATTERN = Pattern.compile("Attack.*?EndAttack", Pattern.DOTALL);
 
     private static final Pattern NAME_PATTERN = Pattern.compile("Name\\s+(\\w+)");
     private static final Pattern TYPE_PATTERN = Pattern.compile("Type\\s+(\\w+)");
@@ -31,13 +34,14 @@ public class LecteurFichier {
     public List<ModeleMonstre> lireMonstres(String filePath) {
         List<ModeleMonstre> monstres = new ArrayList<>();
         String fileContent = readFile(filePath);
-        if (fileContent == null) return null;
+        if (fileContent == null)
+            return null;
 
         Matcher matcher = MONSTER_PATTERN.matcher(fileContent);
         while (matcher.find()) {
             String monsterData = matcher.group();
 
-            String name = extractValue(monsterData,NAME_PATTERN);
+            String name = extractValue(monsterData, NAME_PATTERN);
             String type = extractValue(monsterData, TYPE_PATTERN);
             int[] hp = extractValueIntArray(monsterData, HP_PATTERN);
             int[] speed = extractValueIntArray(monsterData, SPEED_PATTERN);
@@ -47,27 +51,30 @@ public class LecteurFichier {
             double flood = extractValueDouble(monsterData, FLOOD_PATTERN);
             double fall = extractValueDouble(monsterData, FALL_PATTERN);
 
-            monstres.add(new ModeleMonstre(name, type, hp, speed, attack, defense, paralysis, flood, fall));
+            ModeleMonstre tmpMonstre = new ModeleMonstre(name, type);
+            tmpMonstre.populateStats(hp, speed, attack, defense, paralysis, flood, fall);
+            monstres.add(tmpMonstre);
         }
         return monstres;
     }
 
-    public List<ModeleAttaque> lireAttaques(String filePath){
+    public List<ModeleAttaque> lireAttaques(String filePath) {
         List<ModeleAttaque> attaques = new ArrayList<>();
         String fileContent = readFile(filePath);
-        if(fileContent == null) return null;
+        if (fileContent == null)
+            return null;
 
         Matcher matcher = ATTACK_PATTERN.matcher(fileContent);
-        while(matcher.find()){
+        while (matcher.find()) {
             String attackData = matcher.group();
 
-            String name = extractValue(attackData,NAME_PATTERN);
+            String name = extractValue(attackData, NAME_PATTERN);
             String type = extractValue(attackData, TYPE_PATTERN);
             int power = extractValueInt(attackData, POWER_PATTERN);
             int nbUse = extractValueInt(attackData, NBUSE_PATTERN);
             double fail = extractValueDouble(attackData, FAIL_PATTERN_PARAMS);
 
-            attaques.add(new ModeleAttaque(name,type,power,nbUse,fail));
+            attaques.add(new ModeleAttaque(name, type, power, nbUse, fail));
         }
         return attaques;
     }
@@ -81,14 +88,14 @@ public class LecteurFichier {
             }
             return content.toString();
         } catch (IOException e) {
-           System.err.println("Error while reading file :" + filePath);
-           return null;
+            System.err.println("Error while reading file :" + filePath);
+            return null;
         }
     }
 
     private String extractValue(String data, Pattern pattern) {
         Matcher matcher = pattern.matcher(data);
-        if(matcher.find()){
+        if (matcher.find()) {
             return matcher.group(1);
         }
         return null;
@@ -101,6 +108,7 @@ public class LecteurFichier {
         }
         return 0;
     }
+
     private double extractValueDouble(String data, Pattern pattern) {
         Matcher matcher = pattern.matcher(data);
         if (matcher.find()) {
@@ -111,23 +119,24 @@ public class LecteurFichier {
 
     private int[] extractValueIntArray(String data, Pattern pattern) {
         Matcher matcher = pattern.matcher(data);
-        if(matcher.find()){
-           return new int[]{Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2))};
+        if (matcher.find()) {
+            return new int[] { Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)) };
         }
-        return new int[]{0,0};
+        return new int[] { 0, 0 };
     }
 
     public static void main(String[] args) {
         LecteurFichier lecteur = new LecteurFichier();
         List<ModeleMonstre> monstres = lecteur.lireMonstres("src/app/src/main/java/src/monsters.txt");
         List<ModeleAttaque> attaques = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
-        if(monstres == null || attaques == null) return;
-         for (ModeleMonstre monstre : monstres){
-             System.out.println(monstre);
-         }
-         for(ModeleAttaque attaque : attaques){
+        if (monstres == null || attaques == null)
+            return;
+        for (ModeleMonstre monstre : monstres) {
+            System.out.println(monstre);
+        }
+        for (ModeleAttaque attaque : attaques) {
             System.out.println(attaque);
-         }
-     }
+        }
+    }
 
 }

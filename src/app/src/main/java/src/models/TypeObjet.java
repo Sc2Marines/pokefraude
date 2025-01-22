@@ -1,4 +1,4 @@
-package src;
+package src.models;
 
 public enum TypeObjet {
     POTION,
