@@ -4,21 +4,21 @@ package src.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModeleJeu {
-    private List<ModeleJoueur> joueurs;
-    private List<ModeleMonstre> monstresDisponibles;
-    private List<ModeleAttaque> attaquesDisponibles;
+public class GameModel {
+    private List<PlayerModel> joueurs;
+    private List<MonsterModel> monstresDisponibles;
+    private List<AttackModel> attaquesDisponibles;
     private Terrain terrain;
 
 
-    public ModeleJeu(List<ModeleMonstre> monstresDisponibles, List<ModeleAttaque> attaquesDisponibles) {
+    public GameModel(List<MonsterModel> monstresDisponibles, List<AttackModel> attaquesDisponibles) {
         this.joueurs = new ArrayList<>();
         this.monstresDisponibles = monstresDisponibles;
         this.attaquesDisponibles = attaquesDisponibles;
 
         // Create 2 players with a default set of 3 random monsters
-        List<ModeleMonstre> monstresJoueur1 = new ArrayList<>();
-        List<ModeleMonstre> monstresJoueur2 = new ArrayList<>();
+        List<MonsterModel> monstresJoueur1 = new ArrayList<>();
+        List<MonsterModel> monstresJoueur2 = new ArrayList<>();
         if (monstresDisponibles.size() < 6) {
             System.err.println("Not enough monsters to create a game !");
             return;
@@ -29,13 +29,13 @@ public class ModeleJeu {
         }
 
 
-        joueurs.add(new ModeleJoueur("Joueur 1", monstresJoueur1, attaquesDisponibles));
-        joueurs.add(new ModeleJoueur("Joueur 2", monstresJoueur2, attaquesDisponibles));
+        joueurs.add(new PlayerModel("Joueur 1", monstresJoueur1, attaquesDisponibles));
+        joueurs.add(new PlayerModel("Joueur 2", monstresJoueur2, attaquesDisponibles));
         terrain = new Terrain();
 
     }
 
-    public ModeleJoueur getJoueur(int index) {
+    public PlayerModel getJoueur(int index) {
         return joueurs.get(index);
     }
 
@@ -71,7 +71,7 @@ public class ModeleJeu {
         }
     }
 
-    private void attaquer(ModeleJoueur attaquant, ModeleJoueur defenseur, ModeleAttaque attaqueAttaquant, ModeleAttaque attaqueDefenseur) {
+    private void attaquer(PlayerModel attaquant, PlayerModel defenseur, AttackModel attaqueAttaquant, AttackModel attaqueDefenseur) {
         if (attaqueAttaquant != null) {
             attaquant.attaquer(defenseur, attaqueAttaquant, terrain);
         } else {
@@ -84,7 +84,7 @@ public class ModeleJeu {
         }
     }
 
-    private int getInitiative(ModeleJoueur joueur1, ModeleJoueur joueur2) {
+    private int getInitiative(PlayerModel joueur1, PlayerModel joueur2) {
         int speedJoueur1 = joueur1.getMonstreActif().getVitesse();
         int speedJoueur2 = joueur2.getMonstreActif().getVitesse();
 
@@ -92,7 +92,7 @@ public class ModeleJeu {
     }
 
     public boolean estTermine() {
-        for (ModeleJoueur joueur : joueurs) {
+        for (PlayerModel joueur : joueurs) {
             if (joueur.estVaincu()) {
                 return true;
             }
@@ -100,7 +100,7 @@ public class ModeleJeu {
         return false;
     }
 
-    public ModeleJoueur getVainqueur() {
+    public PlayerModel getVainqueur() {
         if (joueurs.get(0).estVaincu()) {
             return joueurs.get(1);
         } else if (joueurs.get(1).estVaincu()) {
@@ -114,15 +114,15 @@ public class ModeleJeu {
         return terrain;
     }
 
-    public List<ModeleMonstre> getMonstresDisponibles() {
+    public List<MonsterModel> getMonstresDisponibles() {
         return monstresDisponibles;
     }
 
-    public List<ModeleAttaque> getAttaquesDisponibles() {
+    public List<AttackModel> getAttaquesDisponibles() {
         return attaquesDisponibles;
     }
 
-    public List<ModeleJoueur> getJoueurs() {
+    public List<PlayerModel> getJoueurs() {
         return joueurs;
     }
 }

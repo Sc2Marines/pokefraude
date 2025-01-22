@@ -3,32 +3,32 @@ package src.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModeleJoueur {
+public class PlayerModel {
     private String nom;
-    private List<Monstre> monstres;
+    private List<Monster> monstres;
     private int monstreActifIndex;
-    private List<ModeleObjet> objets;
+    private List<ObjectModel> objets;
 
-    public ModeleJoueur(String nom, List<ModeleMonstre> monstresDisponibles, List<ModeleAttaque> attaquesDisponibles) {
+    public PlayerModel(String nom, List<MonsterModel> monstresDisponibles, List<AttackModel> attaquesDisponibles) {
         this.nom = nom;
         this.monstres = new ArrayList<>();
-         for (ModeleMonstre monstreDispo : monstresDisponibles){
-            this.monstres.add(new Monstre(monstreDispo, attaquesDisponibles));
+         for (MonsterModel monstreDispo : monstresDisponibles){
+            this.monstres.add(new Monster(monstreDispo, attaquesDisponibles));
         }
         this.monstreActifIndex = 0;
-        this.objets = List.of(new ModeleObjet("Potion", TypeObjet.POTION),
-                new ModeleObjet("Medicament", TypeObjet.MEDICAMENT));
+        this.objets = List.of(new ObjectModel("Potion", TypeObject.POTION),
+                new ObjectModel("Medicament", TypeObject.MEDICAMENT));
     }
 
     public String getNom() {
         return nom;
     }
 
-    public List<Monstre> getMonstres() {
+    public List<Monster> getMonstres() {
         return monstres;
     }
 
-    public Monstre getMonstreActif() {
+    public Monster getMonstreActif() {
         return monstres.get(monstreActifIndex);
     }
 
@@ -38,7 +38,7 @@ public class ModeleJoueur {
         }
     }
 
-    public void attaquer(ModeleJoueur defenseur, ModeleAttaque attaque, Terrain terrain) {
+    public void attaquer(PlayerModel defenseur, AttackModel attaque, Terrain terrain) {
         getMonstreActif().attaquer(defenseur.getMonstreActif(), attaque, terrain);
     }
 
@@ -46,7 +46,7 @@ public class ModeleJoueur {
         return monstres.stream().allMatch(monstre -> monstre.getPV() <= 0);
     }
 
-    public List<ModeleObjet> getObjets() {
+    public List<ObjectModel> getObjets() {
         return objets;
     }
 }

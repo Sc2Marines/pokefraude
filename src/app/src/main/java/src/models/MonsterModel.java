@@ -1,6 +1,6 @@
 package src.models;
 
-public class ModeleMonstre {
+public class MonsterModel {
     private String name;
     private String type;
     private int[] hp;
@@ -11,7 +11,7 @@ public class ModeleMonstre {
     private double flood;
     private double fall;
 
-    public ModeleMonstre(String name, String type) {
+    public MonsterModel(String name, String type) {
         this.name = name;
         this.type = type;
     }

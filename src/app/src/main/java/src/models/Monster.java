@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class Monstre {
+public class Monster {
     private String nom;
     private String type;
     private int pv;
@@ -14,7 +14,7 @@ public class Monstre {
     private int attaque;
     private int defense;
     private int vitesse;
-    private List<ModeleAttaque> attaques;
+    private List<AttackModel> attaques;
 
     private boolean estParalyse;
     private boolean estEmpoisonne;
@@ -59,7 +59,7 @@ public class Monstre {
     // make the random truely random and compliant
     private Random random = new Random();
 
-    public Monstre(ModeleMonstre modeleMonstre, List<ModeleAttaque> attaquesDisponibles) {
+    public Monster(MonsterModel modeleMonstre, List<AttackModel> attaquesDisponibles) {
         this.nom = modeleMonstre.getName();
         this.type = modeleMonstre.getType();
         this.pv = getRandomValue(modeleMonstre.getHp());
@@ -72,7 +72,7 @@ public class Monstre {
         this.estBrulee = false;
         this.estEmpoisonne = false;
 
-        for (ModeleAttaque modelAttaque : attaquesDisponibles) {
+        for (AttackModel modelAttaque : attaquesDisponibles) {
             if (modelAttaque.getType().equals(this.type) || modelAttaque.getType().equals("Normal")) {
                 this.attaques.add(modelAttaque);
                 if (this.attaques.size() == 4)
@@ -110,7 +110,7 @@ public class Monstre {
         return defense;
     }
 
-    public List<ModeleAttaque> getAttaques() {
+    public List<AttackModel> getAttaques() {
         return attaques;
     }
 
@@ -126,7 +126,7 @@ public class Monstre {
 
     }
 
-    public void attaquer(Monstre cible, ModeleAttaque attaque, Terrain terrain) {
+    public void attaquer(Monster cible, AttackModel attaque, Terrain terrain) {
         if (estParalyse && !estSortiParalysie()) {
             System.out.println(nom + " est paralyse et ne peut attaquer");
             return;
@@ -145,7 +145,7 @@ public class Monstre {
         return this.random.nextDouble() < fail;
     }
 
-    private int calculerDegats(Monstre cible, ModeleAttaque attaque) {
+    private int calculerDegats(Monster cible, AttackModel attaque) {
         double coef = 0.85 + (1.0 - 0.85) * this.random.nextDouble();
 
         double avantage = calculerAvantage(cible, attaque);
@@ -154,7 +154,7 @@ public class Monstre {
                 * coef);
     }
 
-    private double calculerAvantage(Monstre cible, ModeleAttaque attaque) {
+    private double calculerAvantage(Monster cible, AttackModel attaque) {
         String attaqueType = attaque.getType();
         String cibleType = cible.getType();
 
@@ -165,7 +165,7 @@ public class Monstre {
     }
 
 
-    private void appliquerEffetAttaque(Monstre cible, Terrain terrain) {
+    private void appliquerEffetAttaque(Monster cible, Terrain terrain) {
         switch (this.type) {
             case FOUDRE:
                 paralyser(cible);
@@ -199,21 +199,21 @@ public class Monstre {
         System.out.println(nom + " est guerri de ses effets de status");
     }
 
-    private void empoisonner(Monstre cible) {
+    private void empoisonner(Monster cible) {
         if (!cible.estEmpoisonne) {
             cible.estEmpoisonne = true;
             System.out.println(cible.nom + " est empoisonne");
         }
     }
 
-    private void bruler(Monstre cible) {
+    private void bruler(Monster cible) {
         if (!cible.estBrulee) {
             cible.estBrulee = true;
             System.out.println(cible.nom + " est brule");
         }
     }
 
-    private void inonder(Terrain terrain, Monstre cible) {
+    private void inonder(Terrain terrain, Monster cible) {
         if (terrain.getEtat() != Terrain.TypeTerrain.INONDE) {
             terrain.modifier(Terrain.TypeTerrain.INONDE);
             System.out.println("Le terrain est inonde");
@@ -221,7 +221,7 @@ public class Monstre {
         }
     }
 
-    private void chute(Monstre cible) {
+    private void chute(Monster cible) {
         if (Math.random() < 0.3) {
             cible.subirDegats(cible.getAttaque() / 4);
             System.out.println(cible.nom + " a chute");
@@ -229,7 +229,7 @@ public class Monstre {
 
     }
 
-    private void paralyser(Monstre cible) {
+    private void paralyser(Monster cible) {
         if (!cible.estParalyse) {
             cible.estParalyse = true;
             System.out.println(cible.nom + " est paralyse");

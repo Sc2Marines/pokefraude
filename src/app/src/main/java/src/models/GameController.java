@@ -2,16 +2,16 @@ package src.models;
 import src.utils.LecteurFichier;
 import java.util.List;
 import src.view.InterfaceConsole;
-public class ControleurJeu {
-    private ModeleJeu modeleJeu;
+public class GameController {
+    private GameModel modeleJeu;
     private InterfaceConsole interfaceConsole;
     private LecteurFichier lecteurFichier;
 
-    public ControleurJeu() {
+    public GameController() {
         lecteurFichier = new LecteurFichier();
         // Load monsters and attacks
-        List<ModeleMonstre> monstres = lecteurFichier.lireMonstres("src/app/src/main/java/src/monsters.txt");
-        List<ModeleAttaque> attaques = lecteurFichier.lireAttaques("src/app/src/main/java/src/attacks.txt");
+        List<MonsterModel> monstres = lecteurFichier.lireMonstres("src/app/src/main/java/src/monsters.txt");
+        List<AttackModel> attaques = lecteurFichier.lireAttaques("src/app/src/main/java/src/attacks.txt");
 
         if (monstres == null || attaques == null) {
            System.err.println("Error loading monsters and attacks");
@@ -19,7 +19,7 @@ public class ControleurJeu {
         }
 
         // Create the game model and user interface
-        modeleJeu = new ModeleJeu(monstres, attaques);
+        modeleJeu = new GameModel(monstres, attaques);
         interfaceConsole = new InterfaceConsole();
 
     }
@@ -39,7 +39,7 @@ public class ControleurJeu {
         }
         System.out.println("Game over");
 
-        ModeleJoueur vainqueur = modeleJeu.getVainqueur();
+        PlayerModel vainqueur = modeleJeu.getVainqueur();
         if (vainqueur != null) {
            System.out.println("Le vainqueur est le joueur : " + vainqueur.getNom());
         } else {
@@ -49,7 +49,7 @@ public class ControleurJeu {
     }
 
     public static void main(String[] args) {
-        ControleurJeu controleurJeu = new ControleurJeu();
+        GameController controleurJeu = new GameController();
         controleurJeu.demarrer();
     }
 }

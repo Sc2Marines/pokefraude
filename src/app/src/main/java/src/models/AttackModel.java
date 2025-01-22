@@ -1,6 +1,6 @@
 package src.models;
 
-public class ModeleAttaque {
+public class AttackModel {
     private String name;
     private String type;
     private int power;
@@ -8,7 +8,7 @@ public class ModeleAttaque {
     private double fail;
 
 
-    public ModeleAttaque(String name, String type, int power, int nbUse, double fail) {
+    public AttackModel(String name, String type, int power, int nbUse, double fail) {
         this.name = name;
         this.type = type;
         this.power = power;

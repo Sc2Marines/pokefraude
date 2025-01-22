@@ -1,6 +1,6 @@
 package src.models;
 
-public enum TypeObjet {
+public enum TypeObject {
     POTION,
     MEDICAMENT
 }
