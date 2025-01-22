@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.models.ModeleAttaque;
-import src.models.ModeleMonstre;
+import src.models.AttackModel;
+import src.models.MonsterModel;
 
 public class LecteurFichier {
 
@@ -31,11 +32,11 @@ public class LecteurFichier {
     private static final Pattern NBUSE_PATTERN = Pattern.compile("NbUse\\s+(\\d+)");
     private static final Pattern FAIL_PATTERN_PARAMS = Pattern.compile("Fail\\s+(\\d+\\.\\d+)");
 
-    public List<ModeleMonstre> lireMonstres(String filePath) {
-        List<ModeleMonstre> monstres = new ArrayList<>();
+    public List<MonsterModel> lireMonstres(String filePath) {
+        List<MonsterModel> monstres = new ArrayList<>();
         String fileContent = readFile(filePath);
         if (fileContent == null)
-            return null;
+            return Collections.emptyList();
 
         Matcher matcher = MONSTER_PATTERN.matcher(fileContent);
         while (matcher.find()) {
@@ -51,18 +52,18 @@ public class LecteurFichier {
             double flood = extractValueDouble(monsterData, FLOOD_PATTERN);
             double fall = extractValueDouble(monsterData, FALL_PATTERN);
 
-            ModeleMonstre tmpMonstre = new ModeleMonstre(name, type);
+            MonsterModel tmpMonstre = new MonsterModel(name, type);
             tmpMonstre.populateStats(hp, speed, attack, defense, paralysis, flood, fall);
             monstres.add(tmpMonstre);
         }
         return monstres;
     }
 
-    public List<ModeleAttaque> lireAttaques(String filePath) {
-        List<ModeleAttaque> attaques = new ArrayList<>();
+    public List<AttackModel> lireAttaques(String filePath) {
+        List<AttackModel> attaques = new ArrayList<>();
         String fileContent = readFile(filePath);
         if (fileContent == null)
-            return null;
+            return Collections.emptyList();
 
         Matcher matcher = ATTACK_PATTERN.matcher(fileContent);
         while (matcher.find()) {
@@ -74,7 +75,7 @@ public class LecteurFichier {
             int nbUse = extractValueInt(attackData, NBUSE_PATTERN);
             double fail = extractValueDouble(attackData, FAIL_PATTERN_PARAMS);
 
-            attaques.add(new ModeleAttaque(name, type, power, nbUse, fail));
+            attaques.add(new AttackModel(name, type, power, nbUse, fail));
         }
         return attaques;
     }
@@ -127,14 +128,14 @@ public class LecteurFichier {
 
     public static void main(String[] args) {
         LecteurFichier lecteur = new LecteurFichier();
-        List<ModeleMonstre> monstres = lecteur.lireMonstres("src/app/src/main/java/src/monsters.txt");
-        List<ModeleAttaque> attaques = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
+        List<MonsterModel> monstres = lecteur.lireMonstres("src/app/src/main/java/src/monsters.txt");
+        List<AttackModel> attaques = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
         if (monstres == null || attaques == null)
             return;
-        for (ModeleMonstre monstre : monstres) {
+        for (MonsterModel monstre : monstres) {
             System.out.println(monstre);
         }
-        for (ModeleAttaque attaque : attaques) {
+        for (AttackModel attaque : attaques) {
             System.out.println(attaque);
         }
     }

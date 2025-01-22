@@ -47,4 +47,35 @@ public class AttackModel {
     public double getFail() {
         return fail;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        AttackModel that = (AttackModel) obj;
+        if (!name.equals(that.name))
+            return false;
+        if (!type.equals(that.type))
+            return false;
+        if (Double.compare(that.fail, fail) != 0)
+            return false;
+        if (power != that.power)
+            return false;
+        return nbUse == that.nbUse;
+    }
+
+    @Override
+    public int hashCode(){
+        int result;
+        long temp;
+        result = name.hashCode();
+        result = 31 * result + type.hashCode();
+        result = 31 * result + power;
+        result = 31 * result + nbUse;
+        temp = Double.doubleToLongBits(fail);
+        result = 31 * result + (int) (temp ^(temp >>> 32));
+        return result;
+    }
 }

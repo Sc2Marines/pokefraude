@@ -3,28 +3,28 @@ package src.models;
 public class Action {
     private ActionType type;
     private int index;
-    private ModeleAttaque attaque;
-    private ModeleObjet objet;
-    private ModeleMonstre nouveauMonstre;
+    private AttackModel attaque;
+    private ObjectModel objet;
+    private MonsterModel nouveauMonstre;
 
     public Action(ActionType type, int index) {
         this.type = type;
         this.index = index;
     }
 
-    public Action(ActionType type, int index, ModeleAttaque attaque) {
+    public Action(ActionType type, int index, AttackModel attaque) {
         this.type = type;
         this.index = index;
         this.attaque = attaque;
     }
 
-    public Action(ActionType type, int index, ModeleObjet objet) {
+    public Action(ActionType type, int index, ObjectModel objet) {
         this.type = type;
         this.index = index;
         this.objet = objet;
     }
 
-    public Action(ActionType type, int index, ModeleMonstre nouveauMonstre) {
+    public Action(ActionType type, int index, MonsterModel nouveauMonstre) {
         this.type = type;
         this.index = index;
         this.nouveauMonstre = nouveauMonstre;
@@ -38,15 +38,15 @@ public class Action {
         return index;
     }
 
-    public ModeleAttaque getAttaque() {
+    public AttackModel getAttaque() {
         return attaque;
     }
 
-    public ModeleObjet getObjet() {
+    public ObjectModel getObjet() {
         return objet;
     }
 
-    public ModeleMonstre getNouveauMonstre() {
+    public MonsterModel getNouveauMonstre() {
         return nouveauMonstre;
     }
 }
