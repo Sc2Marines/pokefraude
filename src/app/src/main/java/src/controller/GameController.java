@@ -1,17 +1,22 @@
-package src.models;
+package src.controller;
+import src.models.Action;
+import src.models.AttackModel;
+import src.models.GameModel;
+import src.models.MonsterModel;
+import src.models.PlayerModel;
 import src.utils.LecteurFichier;
 import java.util.List;
-import src.view.InterfaceConsole;
+import src.view.*;
 public class GameController {
     private GameModel modeleJeu;
-    private InterfaceConsole interfaceConsole;
+    private InterfaceGenerale interfaceConsole;
     private LecteurFichier lecteurFichier;
 
     public GameController() {
         lecteurFichier = new LecteurFichier();
         // Load monsters and attacks
-        List<MonsterModel> monstres = lecteurFichier.lireMonstres("src/app/src/main/java/src/monsters.txt");
-        List<AttackModel> attaques = lecteurFichier.lireAttaques("src/app/src/main/java/src/attacks.txt");
+        List<MonsterModel> monstres = lecteurFichier.lireMonstres("./src/app/src/main/java/src/config/monsters.txt");
+        List<AttackModel> attaques = lecteurFichier.lireAttaques("./src/app/src/main/java/src/config/attacks.txt");
 
         if (monstres == null || attaques == null) {
            System.err.println("Error loading monsters and attacks");
@@ -32,18 +37,18 @@ public class GameController {
             Action actionJoueur2 = interfaceConsole.obtenirActionJoueur(modeleJeu.getJoueur(1));
 
             // Execute the actions
-            modeleJeu.executerActions(actionJoueur1, actionJoueur2);
+            interfaceConsole.displayText(modeleJeu.executerActions(actionJoueur1, actionJoueur2));
 
             // Display the game status
             interfaceConsole.afficherEtatJeu(modeleJeu);
         }
-        System.out.println("Game over");
+        interfaceConsole.displayText("Game over");
 
         PlayerModel vainqueur = modeleJeu.getVainqueur();
         if (vainqueur != null) {
-           System.out.println("Le vainqueur est le joueur : " + vainqueur.getNom());
+            interfaceConsole.displayText("Le vainqueur est le joueur : " + vainqueur.getNom());
         } else {
-            System.out.println("Match nul");
+            interfaceConsole.displayText("Match nul");
         }
 
     }

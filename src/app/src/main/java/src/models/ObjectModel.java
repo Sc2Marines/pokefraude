@@ -17,11 +17,13 @@ public class ObjectModel {
         return type;
     }
 
-    public void utiliser(Monster monstre){
+    public String utiliser(Monster monstre){
+        StringBuilder result = new StringBuilder();
         if (this.type == TypeObject.POTION){
-            monstre.soigner(50);
+            result.append(monstre.soigner(50)); 
         } else if(this.type == TypeObject.MEDICAMENT){
-            monstre.guerir();
+            result.append(monstre.guerir());
         }
+        return result.toString();
     }
 }

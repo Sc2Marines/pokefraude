@@ -39,7 +39,8 @@ public class GameModel {
         return joueurs.get(index);
     }
 
-    public void executerActions(Action actionJoueur1, Action actionJoueur2) {
+    public String executerActions(Action actionJoueur1, Action actionJoueur2) {
+        StringBuilder result = new StringBuilder();
         // Execute changes of monsters
         if (actionJoueur1.getType() == ActionType.CHANGER_MONSTRE) {
             joueurs.get(0).changerMonstreActif(actionJoueur1.getIndex());
@@ -49,39 +50,44 @@ public class GameModel {
         }
         // Execute objets
         if (actionJoueur1.getType() == ActionType.OBJET && actionJoueur1.getObjet() != null) {
-                actionJoueur1.getObjet().utiliser(joueurs.get(0).getMonstreActif());
+                result.append(actionJoueur1.getObjet().utiliser(joueurs.get(0).getMonstreActif()));
+                joueurs.get(0).retirerObject(actionJoueur1.getObjet());
             }
         
         if (actionJoueur2.getType() == ActionType.OBJET && actionJoueur2.getObjet() != null) {
-                actionJoueur2.getObjet().utiliser(joueurs.get(1).getMonstreActif());
+                result.append(actionJoueur2.getObjet().utiliser(joueurs.get(1).getMonstreActif()));
+                joueurs.get(1).retirerObject(actionJoueur2.getObjet());
             }
         
         //Execute attacks
         if (actionJoueur1.getType() == ActionType.ATTAQUE && actionJoueur2.getType() == ActionType.ATTAQUE) {
             int initJoueur = getInitiative(joueurs.get(0), joueurs.get(1));
             if (initJoueur == 0) {
-                attaquer(joueurs.get(0), joueurs.get(1), actionJoueur1.getAttaque(), actionJoueur2.getAttaque());
+                result.append(attaquer(joueurs.get(0), joueurs.get(1), actionJoueur1.getAttaque(), actionJoueur2.getAttaque()));
             } else {
-                attaquer(joueurs.get(1), joueurs.get(0), actionJoueur2.getAttaque(), actionJoueur1.getAttaque());
+                result.append(attaquer(joueurs.get(1), joueurs.get(0), actionJoueur2.getAttaque(), actionJoueur1.getAttaque()));
             }
         } else if (actionJoueur1.getType() == ActionType.ATTAQUE) {
-            attaquer(joueurs.get(0), joueurs.get(1), actionJoueur1.getAttaque(), null);
+            result.append(attaquer(joueurs.get(0), joueurs.get(1), actionJoueur1.getAttaque(), null));
         } else if (actionJoueur2.getType() == ActionType.ATTAQUE) {
-            attaquer(joueurs.get(1), joueurs.get(0), actionJoueur2.getAttaque(), null);
+            result.append(attaquer(joueurs.get(1), joueurs.get(0), actionJoueur2.getAttaque(), null));
         }
+        return result.toString();
     }
 
-    private void attaquer(PlayerModel attaquant, PlayerModel defenseur, AttackModel attaqueAttaquant, AttackModel attaqueDefenseur) {
+    private String attaquer(PlayerModel attaquant, PlayerModel defenseur, AttackModel attaqueAttaquant, AttackModel attaqueDefenseur) {
+        StringBuilder result = new StringBuilder();
         if (attaqueAttaquant != null) {
-            attaquant.attaquer(defenseur, attaqueAttaquant, terrain);
+            result.append(attaquant.attaquer(defenseur, attaqueAttaquant, terrain));
         } else {
-            attaquant.getMonstreActif().subirDegats(10);
+            result.append(attaquant.getMonstreActif().subirDegats(10));
         }
         if (attaqueDefenseur != null) {
-            defenseur.attaquer(attaquant, attaqueDefenseur, terrain);
+            result.append(defenseur.attaquer(attaquant, attaqueDefenseur, terrain));
         } else {
-            defenseur.getMonstreActif().subirDegats(10);
+            result.append(defenseur.getMonstreActif().subirDegats(10));
         }
+        return result.toString();
     }
 
     private int getInitiative(PlayerModel joueur1, PlayerModel joueur2) {

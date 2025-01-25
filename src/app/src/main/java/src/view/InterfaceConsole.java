@@ -2,8 +2,10 @@ package src.view;
 
 import java.util.Scanner;
 import src.models.*;
+import java.util.*;
+import src.utils.Tuple;
 
-public class InterfaceConsole {
+public class InterfaceConsole implements InterfaceGenerale {
     private Scanner scanner;
 
 
@@ -26,14 +28,21 @@ public class InterfaceConsole {
                 }
 
             }
-             System.out.println("Objets : ");
-            for(int j = 0; j< joueur.getObjets().size(); j++){
-               System.out.println(" - "+j +": "+ joueur.getObjets().get(j).getNom());
+            System.out.println("Objets : ");
+            for(int j = 0; j< joueur.getObjectCount().size(); j++){
+               System.out.println(" - "+j +": "+ joueur.getObjectCount().get(j).getFirst().getNom() + " x " + joueur.getObjectCount().get(j).getSecond());
             }
         }
         System.out.println("Terrain : " + modeleJeu.getTerrain().getEtat());
         System.out.println("============================================================\n");
 
+    }
+
+    public void displayText(String text) {
+        if (!text.isEmpty())
+        {
+            System.out.println(text);
+        }
     }
 
     public src.models.Action obtenirActionJoueur(PlayerModel joueur) {

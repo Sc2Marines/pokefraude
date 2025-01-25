@@ -12,10 +12,10 @@ import src.models.AttackModel;
 import src.models.MonsterModel;
 import src.utils.LecteurFichier;
 
-class LecteurFichierTest {
-    private LecteurFichier lecteurFichier = new LecteurFichier();
+class FileParserTest {
+    private LecteurFichier fileParser = new LecteurFichier();
 
-    private static final String MONSTRES = "Monster\n" + //
+    private static final String MONSTERS = "Monster\n" + //
                 "Name Pikachu\n" + //
                 "Type Electric\n" + //
                 "HP 110 141\n" + //
@@ -35,7 +35,7 @@ class LecteurFichierTest {
                 "Fall 0.35\n" + //
                 "EndMonster";
 
-    private static final String ATTAQUES = "Attack\n" + //
+    private static final String ATTACKS = "Attack\n" + //
                 "Name Eclair\n" + //
                 "Type Electric\n" + //
                 "Power 40\n" + //
@@ -51,49 +51,49 @@ class LecteurFichierTest {
                 "EndAttack";
 
     @Test
-    void MonstresParseSuccessfully() throws IOException {
+    void MonsterParseSuccessfully() throws IOException {
         // Create a temporary file and put the text into it
         File tempFile = File.createTempFile("monsters", ".txt");
         tempFile.deleteOnExit();
         try (FileWriter writer = new FileWriter(tempFile)) {
-            writer.write(MONSTRES);
+            writer.write(MONSTERS);
         }
 
-        List<MonsterModel> monstres = lecteurFichier.lireMonstres(tempFile.getAbsolutePath());
+        List<MonsterModel> monsters = fileParser.lireMonstres(tempFile.getAbsolutePath());
 
-        assertNotNull(monstres, "La liste des mosntres ne doit pas être nulle.");
-        assertEquals(2, monstres.size(), "La liste doit contenir exactement 2 monstres.");
+        assertNotNull(monsters, "The list of mosnters must not be zero.");
+        assertEquals(2, monsters.size(), "The list must contain exactly 2 monsters.");
 
-        MonsterModel tmpMonstre1 = new MonsterModel("Pikachu", "Electric");
-        tmpMonstre1.populateStats(new int[]{110, 141}, new int[]{110, 141}, new int[]{75, 106}, new int[]{50, 82}, 0.2, 0.0, 0.0);
+        MonsterModel tmpMonster1 = new MonsterModel("Pikachu", "Electric");
+        tmpMonster1.populateStats(new int[]{110, 141}, new int[]{110, 141}, new int[]{75, 106}, new int[]{50, 82}, 0.2, 0.0, 0.0);
 
         MonsterModel tmpMonstre2 = new MonsterModel("Cerapuca", "Water");
         tmpMonstre2.populateStats(new int[]{119, 150}, new int[]{63, 94}, new int[]{68, 99}, new int[]{85, 116}, 0.0, 0.25, 0.35);
 
-        assertEquals(tmpMonstre1, monstres.get(0), "Le premier monstre doit être égal au monstre crée artificiellement.");
-        assertEquals(tmpMonstre2, monstres.get(1), "Le deuxième monstre doit être égal au monstre crée artificiellement.");
+        assertEquals(tmpMonster1, monsters.get(0), "The first monster must be equal to the artificially created monster.");
+        assertEquals(tmpMonstre2, monsters.get(1), "The second monster must be equal to the artificially created monster.");
 
-        System.out.println("Toutes les assertions sont passées, le test est réussi.");
+        System.out.println("All assertions are passed, the test is successful.");
     }
 
     @Test 
     void AttaquesParsedSUccessfully() throws IOException {
-        File tempFile = File.createTempFile("attaques", ".txt");
+        File tempFile = File.createTempFile("attacks", ".txt");
         try (FileWriter writer = new FileWriter(tempFile)) {
-            writer.write(ATTAQUES);
+            writer.write(ATTACKS);
         }
 
 
         
-        List<AttackModel> attaques = lecteurFichier.lireAttaques(tempFile.getAbsolutePath());
-        assertNotNull(attaques, "La liste des attaques ne doit pas être nulle.");
-        assertEquals(2, attaques.size(), "La liste doit contenir exactement 2 attaques.");
+        List<AttackModel> attacks = fileParser.lireAttaques(tempFile.getAbsolutePath());
+        assertNotNull(attacks, "The list of attacks does not have to be zero.");
+        assertEquals(2, attacks.size(), "The list must contain exactly 2 attacks.");
 
-        AttackModel tmpAttaque1 = new AttackModel("Eclair", "Electric", 40, 10, 0.07);
-        AttackModel tmpAttaque2 = new AttackModel("Charge", "Normal", 35, 15, 0.03);
-        assertEquals(tmpAttaque1, attaques.get(0), "La première attaque doit être égale à l'attaque crée artificellement.");
-        assertEquals(tmpAttaque2, attaques.get(1), "La deuxième attaque doit être égale à l'attaque crée artificellement.");
+        AttackModel tmpAttack1 = new AttackModel("Eclair", "Electric", 40, 10, 0.07);
+        AttackModel tmpAttack2 = new AttackModel("Charge", "Normal", 35, 15, 0.03);
+        assertEquals(tmpAttack1, attacks.get(0), "The first attack must be equal to the artificially created attack.");
+        assertEquals(tmpAttack2, attacks.get(1), "The second attack must be equal to the artificially created attack.");
         
-        System.out.println("Toutes les assertions sont passées, le test est réussi.");
+        System.out.println("All assertions are passed, the test is successful.");
     }
 }

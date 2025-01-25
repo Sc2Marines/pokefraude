@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import src.utils.Tuple;
+
 public class Monster {
     private String nom;
     private String type;
@@ -114,7 +116,7 @@ public class Monster {
         return attaques;
     }
 
-    public void subirDegats(int degats) {
+    public String subirDegats(int degats) {
         if (estBrulee) {
             degats += getAttaque() / 10;
         }
@@ -122,23 +124,24 @@ public class Monster {
         if (this.pv < 0) {
             this.pv = 0;
         }
-        System.out.println(nom + " a subit " + degats + " degats, il lui reste " + pv + "PV");
-
+        return nom + " a subit " + degats + " degats, il lui reste " + pv + "PV" +"\n";
     }
 
-    public void attaquer(Monster cible, AttackModel attaque, Terrain terrain) {
-        if (estParalyse && !estSortiParalysie()) {
-            System.out.println(nom + " est paralyse et ne peut attaquer");
-            return;
+    public String attaquer(Monster cible, AttackModel attaque, Terrain terrain) {
+        StringBuilder result = new StringBuilder();
+        Tuple<Boolean, String> paralyse = estSortiParalysie();
+        result.append(paralyse.getSecond());
+        if (estParalyse && !(boolean)paralyse.getFirst()) {
+            result.append(nom + " est paralyse et ne peut attaquer" +"\n"); 
         }
         if (hasFail(attaque.getFail())) {
-            System.out.println(nom + " a rate son attaque : " + attaque.getName());
-            return;
+            result.append(nom + " a rate son attaque : " + attaque.getName() +"\n"); 
         }
-        System.out.println(nom + " attaque avec : " + attaque.getName());
         int degats = calculerDegats(cible, attaque);
-        cible.subirDegats(degats);
-        appliquerEffetAttaque(cible, terrain);
+        result.append(cible.subirDegats(degats));
+        result.append(appliquerEffetAttaque(cible, terrain));
+        result.append(nom + " attaque avec : " + attaque.getName() +"\n");
+        return result.toString();
     }
 
     private boolean hasFail(double fail) {
@@ -165,101 +168,135 @@ public class Monster {
     }
 
 
-    private void appliquerEffetAttaque(Monster cible, Terrain terrain) {
+    private String appliquerEffetAttaque(Monster cible, Terrain terrain) {
+        String result = "";
         switch (this.type) {
             case FOUDRE:
-                paralyser(cible);
+                result = paralyser(cible);
                 break;
             case EAU:
-                inonder(terrain, cible);
+                result = inonder(terrain, cible);
                 break;
             case FEU:
-                bruler(cible);
+                result = bruler(cible);
                 break;
             case NATURE:
-                empoisonner(cible);
+                result = empoisonner(cible);
                 break;
             default:
                 break;
         }
+        return result;
     }
 
-    public void soigner(int heal) {
+    public String soigner(int heal) {
         this.pv += heal;
         if (this.pv > pvMax) {
             this.pv = pvMax;
         }
-        System.out.println(nom + " a recupere " + heal + "PV il a maintenant " + pv + "PV");
+        return nom + " a recupere " + heal + "PV il a maintenant " + pv + "PV" +"\n";
     }
 
-    public void guerir() {
+    public String guerir() {
         this.estBrulee = false;
         this.estEmpoisonne = false;
         this.estParalyse = false;
-        System.out.println(nom + " est guerri de ses effets de status");
+        return nom + " est guerri de ses effets de status" +"\n";
     }
 
-    private void empoisonner(Monster cible) {
+    private String empoisonner(Monster cible) {
+        String result = "";
         if (!cible.estEmpoisonne) {
             cible.estEmpoisonne = true;
-            System.out.println(cible.nom + " est empoisonne");
+            result = cible.nom + " est empoisonne";
         }
+        return result;
     }
 
-    private void bruler(Monster cible) {
+    private String bruler(Monster cible) {
+        String result = "";
         if (!cible.estBrulee) {
             cible.estBrulee = true;
-            System.out.println(cible.nom + " est brule");
+            result = cible.nom + " est brule";
         }
+        return result;
     }
 
-    private void inonder(Terrain terrain, Monster cible) {
+    private String inonder(Terrain terrain, Monster cible) {
+        StringBuilder result = new StringBuilder();
         if (terrain.getEtat() != Terrain.TypeTerrain.INONDE) {
             terrain.modifier(Terrain.TypeTerrain.INONDE);
-            System.out.println("Le terrain est inonde");
-            chute(cible);
+            
+            result.append("Le terrain est inonde" +"\n");
+            result.append(chute(cible));
         }
+        return result.toString();
     }
 
-    private void chute(Monster cible) {
+    private String chute(Monster cible) {
+        StringBuilder result = new StringBuilder();
         if (Math.random() < 0.3) {
-            cible.subirDegats(cible.getAttaque() / 4);
-            System.out.println(cible.nom + " a chute");
+            result.append(cible.subirDegats(cible.getAttaque() / 4));
+            result.append(cible.nom + " a chute" +"\n");
         }
+        return result.toString();
 
     }
 
-    private void paralyser(Monster cible) {
+    private String paralyser(Monster cible) {
+        String result = "";
         if (!cible.estParalyse) {
             cible.estParalyse = true;
-            System.out.println(cible.nom + " est paralyse");
+            result = cible.nom + " est paralyse";
         }
+        return result;
     }
 
-    public boolean estSortiParalysie() {
+    public Tuple<Boolean, String> estSortiParalysie() {
+        Tuple<Boolean, String> result = new Tuple<>(false, "");
         tourParalyse++;
         if (tourParalyse >= 6) {
             estParalyse = false;
             tourParalyse = 0;
-            return true;
+            result.setFirst(true);
+            return result;
         }
         double probabilite = tourParalyse / 6.0;
         if (this.random.nextDouble() < probabilite) {
             estParalyse = false;
             tourParalyse = 0;
-            System.out.println(nom + " n'est plus paralyse");
-            return true;
+            result.setSecond(nom + " n'est plus paralyse" +"\n");
+            result.setFirst(true);
+            return result;
         }
-        return false;
+        return result;
     }
 
-    public void debutTour() {
+    public String debutTour() {
+        StringBuilder result = new StringBuilder();
         if (estBrulee || estEmpoisonne) {
-            subirDegats(getAttaque() / 10);
+            result.append(subirDegats(getAttaque() / 10));
+            
         }
         if (type.equals(NATURE) && !estBrulee && !estEmpoisonne && !estParalyse && pv < pvMax) {
-            soigner(pvMax / 20);
+            result.append(soigner(pvMax / 20));
         }
+        return result.toString();
+    }
 
+    /**
+     * Utilisé pour les tests unitaires junit
+     */
+    public void appliquerEtat(){
+        this.estBrulee = true;
+        this.estEmpoisonne = true;
+        this.estParalyse = true;
+    }
+
+    /**
+     * Utilisé pour les tests unitaires junit
+     */
+    public boolean aAucunEtat(){
+        return (!this.estBrulee && !this.estEmpoisonne && !this.estParalyse);
     }
 }
