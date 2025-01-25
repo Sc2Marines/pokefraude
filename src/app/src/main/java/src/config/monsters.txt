@@ -1,0 +1,101 @@
+Monster
+Name Pikachu
+Type Electric
+HP 110 141
+Speed 110 141
+Attack 75 106
+Defense 50 82
+Paralysis 0.2
+EndMonster
+Monster
+Name Cerapuca
+Type Water
+HP 119 150
+Attack 68 99
+Speed 63 94
+Defense 85 116
+Flood 0.25
+Fall 0.35
+EndMonster
+Monster
+Name Bulbasaur
+Type Nature
+HP 120 145
+Speed 60 70
+Attack 70 85
+Defense 65 80
+EndMonster
+Monster
+Name Charmander
+Type Feu
+HP 105 130
+Speed 80 95
+Attack 85 100
+Defense 55 70
+EndMonster
+Monster
+Name Squirtle
+Type Eau
+HP 115 140
+Speed 70 85
+Attack 65 80
+Defense 80 95
+EndMonster
+Monster
+Name Geodude
+Type Terre
+HP 130 155
+Speed 40 55
+Attack 90 105
+Defense 110 125
+EndMonster
+Monster
+Name Zapdos
+Type Foudre
+HP 125 150
+Speed 100 115
+Attack 110 130
+Defense 85 100
+Paralysis 0.4
+EndMonster
+Monster
+Name Magikarp
+Type Eau
+HP 80 100
+Speed 90 110
+Attack 20 30
+Defense 30 45
+Fall 0.8
+EndMonster
+Monster
+Name Onix
+Type Terre
+HP 150 170
+Speed 50 60
+Attack 45 60
+Defense 130 150
+EndMonster
+Monster
+Name Ivysaur
+Type Nature
+HP 130 155
+Speed 70 80
+Attack 75 90
+Defense 75 90
+EndMonster
+Monster
+Name Charmeleon
+Type Feu
+HP 110 135
+Speed 90 105
+Attack 90 110
+Defense 65 80
+EndMonster
+Monster
+Name Wartortle
+Type Eau
+HP 125 145
+Speed 75 90
+Attack 70 85
+Defense 90 105
+EndMonster
