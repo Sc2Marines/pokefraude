@@ -16,15 +16,15 @@ public class GameController {
         lecteurFichier = new LecteurFichier();
         // Load monsters and attacks
         List<MonsterModel> monstres = lecteurFichier.lireMonstres("./src/app/src/main/java/src/config/monsters.txt");
-        List<AttackModel> attaques = lecteurFichier.lireAttaques("./src/app/src/main/java/src/config/attacks.txt");
+        List<AttackModel> attacks = lecteurFichier.lireAttaques("./src/app/src/main/java/src/config/attacks.txt");
 
-        if (monstres == null || attaques == null) {
+        if (monstres == null || attacks == null) {
            System.err.println("Error loading monsters and attacks");
            return;
         }
 
         // Create the game model and user interface
-        gameModel = new GameModel(monstres, attaques);
+        gameModel = new GameModel(monstres, attacks);
         interfaceConsole = new InterfaceConsole();
         //create 2 players 
         PlayerModel p1 = new PlayerModel("joueur 1");

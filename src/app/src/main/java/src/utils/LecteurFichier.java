@@ -60,7 +60,7 @@ public class LecteurFichier {
     }
 
     public List<AttackModel> lireAttaques(String filePath) {
-        List<AttackModel> attaques = new ArrayList<>();
+        List<AttackModel> attacks = new ArrayList<>();
         String fileContent = readFile(filePath);
         if (fileContent == null)
             return Collections.emptyList();
@@ -75,9 +75,9 @@ public class LecteurFichier {
             int nbUse = extractValueInt(attackData, NBUSE_PATTERN);
             double fail = extractValueDouble(attackData, FAIL_PATTERN_PARAMS);
 
-            attaques.add(new AttackModel(name, type, power, nbUse, fail));
+            attacks.add(new AttackModel(name, type, power, nbUse, fail));
         }
-        return attaques;
+        return attacks;
     }
 
     private String readFile(String filePath) {
@@ -129,14 +129,14 @@ public class LecteurFichier {
     public static void main(String[] args) {
         LecteurFichier lecteur = new LecteurFichier();
         List<MonsterModel> monstres = lecteur.lireMonstres("src/app/src/main/java/src/monsters.txt");
-        List<AttackModel> attaques = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
-        if (monstres == null || attaques == null)
+        List<AttackModel> attacks = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
+        if (monstres == null || attacks == null)
             return;
         for (MonsterModel monstre : monstres) {
             System.out.println(monstre);
         }
-        for (AttackModel attaque : attaques) {
-            System.out.println(attaque);
+        for (AttackModel attack : attacks) {
+            System.out.println(attack);
         }
     }
 

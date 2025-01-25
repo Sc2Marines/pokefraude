@@ -3,7 +3,7 @@ package src.models;
 public class Action {
     private ActionType type;
     private int index;
-    private AttackModel attaque;
+    private AttackModel attack;
     private ObjectModel objet;
     private MonsterModel nouveauMonstre;
 
@@ -12,10 +12,10 @@ public class Action {
         this.index = index;
     }
 
-    public Action(ActionType type, int index, AttackModel attaque) {
+    public Action(ActionType type, int index, AttackModel attack) {
         this.type = type;
         this.index = index;
-        this.attaque = attaque;
+        this.attack = attack;
     }
 
     public Action(ActionType type, int index, ObjectModel objet) {
@@ -39,7 +39,7 @@ public class Action {
     }
 
     public AttackModel getAttaque() {
-        return attaque;
+        return attack;
     }
 
     public ObjectModel getObjet() {

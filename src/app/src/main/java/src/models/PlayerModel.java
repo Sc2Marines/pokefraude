@@ -6,13 +6,13 @@ import java.util.List;
 import src.utils.Tuple;
 
 public class PlayerModel {
-    private String nom;
+    private String name;
     private List<Monster> monsters;
     private int monstreActifIndex;
     private List<ObjectModel> objets;
 
-    public PlayerModel(String nom) {
-        this.nom = nom;
+    public PlayerModel(String name) {
+        this.name = name;
         this.monsters = new ArrayList<>();
         this.monstreActifIndex = 0;
         this.objets = new ArrayList<>(List.of(
@@ -28,7 +28,7 @@ public class PlayerModel {
     }
 
     public String getNom() {
-        return nom;
+        return name;
     }
 
     public List<Monster> getMonstres() {
@@ -45,8 +45,8 @@ public class PlayerModel {
         }
     }
 
-    public String attaquer(PlayerModel defenseur, AttackModel attaque, Terrain terrain) {
-        return getMonstreActif().attaquer(defenseur.getMonstreActif(), attaque, terrain);
+    public String attack(PlayerModel defenseur, AttackModel attack, Terrain terrain) {
+        return getMonstreActif().attack(defenseur.getMonstreActif(), attack, terrain);
     }
 
     public boolean estVaincu() {

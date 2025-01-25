@@ -114,15 +114,15 @@ public class InterfaceConsole implements InterfaceGenerale {
 
     private Action obtenirActionAttaquer(PlayerModel joueur) {
         Monster monstreActif = joueur.getMonstreActif();
-        System.out.println("Choisisez une attaque :");
+        System.out.println("Choisisez une attack :");
         for (int i = 0; i < monstreActif.getAttacks().size(); i++) {
             System.out.println(" " + i + ": " + monstreActif.getAttacks().get(i).getName() + " x "
                     + monstreActif.getAttacks().get(i).getNbUse());
         }
-        System.out.print("Votre attaque : ");
+        System.out.print("Votre attack : ");
         int indexAttaque = scanner.nextInt();
         while (!monstreActif.getAttacks().get(indexAttaque).isAttackAvailable()) {
-            System.out.println("Choisissez une attaque disponible !");
+            System.out.println("Choisissez une attack disponible !");
             indexAttaque = scanner.nextInt();
         }
         return new Action(ActionType.ATTAQUE, indexAttaque, monstreActif.getAttacks().get(indexAttaque));

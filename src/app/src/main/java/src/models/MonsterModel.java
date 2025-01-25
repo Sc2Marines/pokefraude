@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class MonsterModel {
     private String name;
     private String type;
+    private String subType;
     private int[] hp;
     private int[] speed;
     private int[] attack;
@@ -15,7 +16,13 @@ public class MonsterModel {
 
     public MonsterModel(String name, String type) {
         this.name = name;
-        this.type = type;
+        this.subType = type;
+        if (this.subType.equals(Monster.PLANT) || this.subType.equals(Monster.INSECT)){
+            this.type = Monster.NATURE;
+        }
+        else {
+            this.type = type;
+        }
     }
 
     public void populateStats(int[] hp, int[] speed, int[] attack, int[] defense, double paralysis, double flood,
@@ -50,6 +57,10 @@ public class MonsterModel {
 
     public String getType() {
         return type;
+    }
+
+    public String getSubType() {
+        return subType;
     }
 
     public int[] getHp() {

@@ -27,7 +27,7 @@ Defense 65 80
 EndMonster
 Monster
 Name Charmander
-Type Feu
+Type Fire
 HP 105 130
 Speed 80 95
 Attack 85 100
@@ -35,7 +35,7 @@ Defense 55 70
 EndMonster
 Monster
 Name Squirtle
-Type Eau
+Type Water
 HP 115 140
 Speed 70 85
 Attack 65 80
@@ -43,7 +43,7 @@ Defense 80 95
 EndMonster
 Monster
 Name Geodude
-Type Terre
+Type Dirt
 HP 130 155
 Speed 40 55
 Attack 90 105
@@ -51,7 +51,7 @@ Defense 110 125
 EndMonster
 Monster
 Name Zapdos
-Type Foudre
+Type Electric
 HP 125 150
 Speed 100 115
 Attack 110 130
@@ -60,7 +60,7 @@ Paralysis 0.4
 EndMonster
 Monster
 Name Magikarp
-Type Eau
+Type Water
 HP 80 100
 Speed 90 110
 Attack 20 30
@@ -69,7 +69,7 @@ Fall 0.8
 EndMonster
 Monster
 Name Onix
-Type Terre
+Type Dirt
 HP 150 170
 Speed 50 60
 Attack 45 60
@@ -85,7 +85,7 @@ Defense 75 90
 EndMonster
 Monster
 Name Charmeleon
-Type Feu
+Type Fire
 HP 110 135
 Speed 90 105
 Attack 90 110
@@ -93,7 +93,7 @@ Defense 65 80
 EndMonster
 Monster
 Name Wartortle
-Type Eau
+Type Water
 HP 125 145
 Speed 75 90
 Attack 70 85

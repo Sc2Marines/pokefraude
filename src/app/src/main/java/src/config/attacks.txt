@@ -12,3 +12,10 @@ Power 35
 NbUse 15
 Fail 0.03
 EndAttack
+Attack
+Name TramblementDeTerre
+Type Dirt
+Power 30
+NbUse 10
+Fail 0.01
+EndAttack

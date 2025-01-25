@@ -62,7 +62,7 @@ class ObjectsTest {
 
         Monster activeMonster = player.getMonstreActif();
         activeMonster.appliquerEtat();
-        activeMonster.subirDegats(25);
+        activeMonster.takeDamages(25);
         // Use Potion
         potion.utiliser(activeMonster);
         assertEquals(100, activeMonster.getPV(), "The monster's HP should be 100 after using a Potion.");

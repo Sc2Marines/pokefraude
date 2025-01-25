@@ -1,16 +1,16 @@
 package src.models;
 
 public class ObjectModel {
-    private String nom;
+    private String name;
     private TypeObject type;
 
-    public ObjectModel(String nom, TypeObject type) {
-        this.nom = nom;
+    public ObjectModel(String name, TypeObject type) {
+        this.name = name;
         this.type = type;
     }
 
     public String getNom() {
-        return nom;
+        return name;
     }
 
     public TypeObject getType() {
