@@ -59,10 +59,12 @@ public class GameModel {
         result.append(this.executeAnteActions());
         // Execute changes of monsters
         if (actionJoueur1.getType() == ActionType.CHANGER_MONSTRE) {
-            joueurs.get(0).changerMonstreActif(actionJoueur1.getIndex());
+            Monster player2Monster = joueurs.get(1).getMonstreActif();
+            joueurs.get(0).changerMonstreActif(actionJoueur1.getIndex(), terrain, player2Monster);
         }
         if (actionJoueur2.getType() == ActionType.CHANGER_MONSTRE) {
-            joueurs.get(1).changerMonstreActif(actionJoueur2.getIndex());
+            Monster player1Monster = joueurs.get(0).getMonstreActif();
+            joueurs.get(1).changerMonstreActif(actionJoueur2.getIndex(), terrain, player1Monster);
         }
         // Execute objets
         if (actionJoueur1.getType() == ActionType.OBJET && actionJoueur1.getObjet() != null) {

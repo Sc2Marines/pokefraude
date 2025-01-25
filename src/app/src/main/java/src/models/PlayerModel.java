@@ -3,6 +3,7 @@ package src.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.models.Terrain.TypeTerrain;
 import src.utils.Tuple;
 
 public class PlayerModel {
@@ -39,9 +40,15 @@ public class PlayerModel {
         return monsters.get(monstreActifIndex);
     }
 
-    public void changerMonstreActif(int monstreIndex) {
+    public void changerMonstreActif(int monstreIndex, Terrain terrain, Monster actualEnnemyMonster) {
         if (monstreIndex >= 0 && monstreIndex < monsters.size()) {
+            Monster activeMonster = this.getMonstreActif(); 
+            activeMonster.setTriggerFlood(false);
+            if (activeMonster.haveTriggerFlood() && !actualEnnemyMonster.haveTriggerFlood()){
+                terrain.modify(TypeTerrain.NORMAL);
+            }
             this.monstreActifIndex = monstreIndex;
+            
         }
     }
 

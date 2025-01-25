@@ -9,8 +9,12 @@ public class Terrain {
         this.turnLeftBeforeNormal = 0;
     }
 
-    public void modify(TypeTerrain nouvelEtat, int time) {
-        this.etat = nouvelEtat;
+    public void modify(TypeTerrain newState){
+        this.etat = newState;
+    }
+
+    public void modify(TypeTerrain newState, int time) {
+        this.etat = newState;
         this.turnLeftBeforeNormal = time;
     }
 

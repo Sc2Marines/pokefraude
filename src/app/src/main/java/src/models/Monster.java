@@ -27,6 +27,8 @@ public class Monster {
     private boolean isBurned;
     private boolean isHide;
 
+    private boolean haveTriggerFlood;
+
     private boolean attackCancelled;
 
     private int turnParalyse = 0;
@@ -89,6 +91,7 @@ public class Monster {
         this.isPoisoned = false;
         this.attackCancelled = false;
         this.isHide = false;
+        this.haveTriggerFlood = false;
         // deep copy of list + randomisation of elements.
         List<AttackModel> randomisedAttackList = new ArrayList<>();
         for (AttackModel atks : availableAttacks) {
@@ -133,6 +136,15 @@ public class Monster {
 
     public int getDefense() {
         return defense;
+    }
+
+    public boolean haveTriggerFlood()
+    {
+        return this.haveTriggerFlood;
+    }
+
+    public void setTriggerFlood(boolean triggerState) {
+        this.haveTriggerFlood = triggerState;
     }
 
     public List<AttackModel> getAttacks() {
@@ -327,6 +339,7 @@ public class Monster {
         if (Math.random() < this.flood && terrain.getEtat() != Terrain.TypeTerrain.INONDE) {
             // randome from 1 to 3
             terrain.modify(Terrain.TypeTerrain.INONDE, this.random.nextInt(1, 3));
+            this.haveTriggerFlood = true;
             result.append("Le terrain est inonde" + "\n");
         }
 
