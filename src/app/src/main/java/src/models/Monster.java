@@ -192,16 +192,15 @@ public class Monster {
         return this.name + " a subit " + damages + " dégats, il lui reste " + this.pv + "PV" + "\n";
     }
 
-    public String beforeTurnEffects(Monster target, AttackModel attack, Terrain terrain){
+    public String beforeTurnEffects(Terrain terrain){
         StringBuilder result = new StringBuilder();
         result.append(this.decrementHide());
-        result.append(this.fall(terrain, target, attack));
         result.append(this.takeBurnDamage(terrain));
         result.append(this.takePoisonDamage(terrain));
         return result.toString();
     }
 
-    public String afterTurnEffects(Monster target, AttackModel attack, Terrain terrain){
+    public String afterTurnEffects(Terrain terrain){
         StringBuilder result = new StringBuilder();
         result.append(this.regainHealth(terrain));
 
@@ -215,6 +214,7 @@ public class Monster {
         StringBuilder result = new StringBuilder();
         Tuple<Boolean, String> paralyze = estSortiParalysie();
         result.append(paralyze.getSecond());
+        result.append(this.fall(terrain, target, attack));
         if (!this.attackCancelled) {
             boolean canAttack = true;
             if (isParalyzed && !(boolean) paralyze.getFirst()) {

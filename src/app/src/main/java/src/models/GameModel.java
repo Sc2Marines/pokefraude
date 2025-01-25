@@ -34,9 +34,29 @@ public class GameModel {
         return joueurs.get(index);
     }
 
-    public String executerActions(Action actionJoueur1, Action actionJoueur2) {
+    private String executeAnteActions(){
+        String result = "";
         this.terrain.decrement();
+        for (PlayerModel player : joueurs) {
+            Monster monster = player.getMonstreActif();
+            result = monster.beforeTurnEffects(terrain);
+        }
+        return result;
+    }
+
+    private String executePostActions(){
+        String result = "";
+        for (PlayerModel player : joueurs) {
+            Monster monster = player.getMonstreActif();
+            result = monster.afterTurnEffects(terrain);
+        }
+        return result;
+    }
+
+    public String executerActions(Action actionJoueur1, Action actionJoueur2) {
+        
         StringBuilder result = new StringBuilder();
+        result.append(this.executeAnteActions());
         // Execute changes of monsters
         if (actionJoueur1.getType() == ActionType.CHANGER_MONSTRE) {
             joueurs.get(0).changerMonstreActif(actionJoueur1.getIndex());
@@ -68,6 +88,7 @@ public class GameModel {
         } else if (actionJoueur2.getType() == ActionType.ATTAQUE) {
             result.append(attack(joueurs.get(1), joueurs.get(0), actionJoueur2.getAttaque(), null));
         }
+        result.append(this.executePostActions());
         return result.toString();
     }
 
