@@ -119,7 +119,7 @@ public class GameModel {
         return monstresDisponibles;
     }
 
-    public List<AttackModel> getAttaquesDisponibles() {
+    public List<AttackModel> getAttacksDisponibles() {
         return availableAttacks;
     }
 

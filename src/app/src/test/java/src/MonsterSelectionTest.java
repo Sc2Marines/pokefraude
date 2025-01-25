@@ -99,7 +99,7 @@ class MonsterSelectionTest {
                     listAttacks.add(atk);
                 }
             }
-            assertEquals(listAttacks, monster.getAttaques(), "The monster should have the correct list of attacks.");
+            assertEquals(listAttacks, monster.getAttacks(), "The monster should have the correct list of attacks.");
         }
     }
 }

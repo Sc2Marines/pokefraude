@@ -73,15 +73,16 @@ public class Monster {
         this.estParalyse = false;
         this.estBrulee = false;
         this.estEmpoisonne = false;
-
+    
         for (AttackModel modelAttaque : availableAttacks) {
             if (modelAttaque.getType().equals(this.type) || modelAttaque.getType().equals("Normal")) {
-                this.attaques.add(modelAttaque);
+                // Create a deep copy of the AttackModel
+                AttackModel copiedAttack = new AttackModel(modelAttaque);
+                this.attaques.add(copiedAttack);
                 if (this.attaques.size() == 4)
                     break;
             }
         }
-
     }
 
     private int getRandomValue(int[] values) {
@@ -112,7 +113,7 @@ public class Monster {
         return defense;
     }
 
-    public List<AttackModel> getAttaques() {
+    public List<AttackModel> getAttacks() {
         return attaques;
     }
 
@@ -141,6 +142,7 @@ public class Monster {
         result.append(cible.subirDegats(degats));
         result.append(appliquerEffetAttaque(cible, terrain));
         result.append(nom + " attaque avec : " + attaque.getName() +"\n");
+        attaque.use(1);
         return result.toString();
     }
 

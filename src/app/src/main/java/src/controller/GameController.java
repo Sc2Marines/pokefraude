@@ -36,7 +36,7 @@ public class GameController {
         List<PlayerModel> players = gameModel.getPlayers();
         for (PlayerModel playerModel : players) {
             List<MonsterModel> playerMonsters= interfaceConsole.chooseMonsters(gameModel, playerModel);
-            playerModel.setMonsters(playerMonsters, gameModel.getAttaquesDisponibles());
+            playerModel.setMonsters(playerMonsters, gameModel.getAttacksDisponibles());
         }
 
         interfaceConsole.afficherEtatJeu(gameModel);

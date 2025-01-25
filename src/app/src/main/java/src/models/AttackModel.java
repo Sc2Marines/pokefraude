@@ -16,6 +16,16 @@ public class AttackModel {
         this.fail = fail;
     }
 
+    // deep copy constructor
+    public AttackModel(AttackModel other) {
+        this.name = other.name;
+        this.type = other.type;
+        this.power = other.power;
+        this.fail = other.fail;
+        this.nbUse = other.nbUse;
+    }
+
+
     @Override
     public String toString() {
         return "ModeleAttaque{" +
@@ -46,6 +56,14 @@ public class AttackModel {
 
     public double getFail() {
         return fail;
+    }
+
+    public boolean isAttackAvailable() {
+        return (this.nbUse > 0);
+    }
+
+    public void use(int nbUse) {
+        this.nbUse -= nbUse;
     }
 
     @Override
