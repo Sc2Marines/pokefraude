@@ -61,7 +61,7 @@ public class Monster {
     // make the random truely random and compliant
     private Random random = new Random();
 
-    public Monster(MonsterModel modeleMonstre, List<AttackModel> attaquesDisponibles) {
+    public Monster(MonsterModel modeleMonstre, List<AttackModel> availableAttacks) {
         this.nom = modeleMonstre.getName();
         this.type = modeleMonstre.getType();
         this.pv = getRandomValue(modeleMonstre.getHp());
@@ -74,7 +74,7 @@ public class Monster {
         this.estBrulee = false;
         this.estEmpoisonne = false;
 
-        for (AttackModel modelAttaque : attaquesDisponibles) {
+        for (AttackModel modelAttaque : availableAttacks) {
             if (modelAttaque.getType().equals(this.type) || modelAttaque.getType().equals("Normal")) {
                 this.attaques.add(modelAttaque);
                 if (this.attaques.size() == 4)

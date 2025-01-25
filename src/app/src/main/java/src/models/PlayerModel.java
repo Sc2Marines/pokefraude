@@ -7,16 +7,13 @@ import src.utils.Tuple;
 
 public class PlayerModel {
     private String nom;
-    private List<Monster> monstres;
+    private List<Monster> monsters;
     private int monstreActifIndex;
     private List<ObjectModel> objets;
 
-    public PlayerModel(String nom, List<MonsterModel> monstresDisponibles, List<AttackModel> attaquesDisponibles) {
+    public PlayerModel(String nom) {
         this.nom = nom;
-        this.monstres = new ArrayList<>();
-        for (MonsterModel monstreDispo : monstresDisponibles) {
-            this.monstres.add(new Monster(monstreDispo, attaquesDisponibles));
-        }
+        this.monsters = new ArrayList<>();
         this.monstreActifIndex = 0;
         this.objets = new ArrayList<>(List.of(
                 new ObjectModel("Potion", TypeObject.POTION),
@@ -24,20 +21,26 @@ public class PlayerModel {
         ));
     }
 
+    public void setMonsters(List<MonsterModel> monsters, List<AttackModel> availableAttacks) {
+        for (MonsterModel monster : monsters) {
+            this.monsters.add(new Monster(monster, availableAttacks));
+        }
+    }
+
     public String getNom() {
         return nom;
     }
 
     public List<Monster> getMonstres() {
-        return monstres;
+        return monsters;
     }
 
     public Monster getMonstreActif() {
-        return monstres.get(monstreActifIndex);
+        return monsters.get(monstreActifIndex);
     }
 
     public void changerMonstreActif(int monstreIndex) {
-        if (monstreIndex >= 0 && monstreIndex < monstres.size()) {
+        if (monstreIndex >= 0 && monstreIndex < monsters.size()) {
             this.monstreActifIndex = monstreIndex;
         }
     }
@@ -47,7 +50,7 @@ public class PlayerModel {
     }
 
     public boolean estVaincu() {
-        return monstres.stream().allMatch(monstre -> monstre.getPV() <= 0);
+        return monsters.stream().allMatch(monstre -> monstre.getPV() <= 0);
     }
 
     public void retirerObject(ObjectModel objet) {

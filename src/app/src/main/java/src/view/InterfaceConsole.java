@@ -1,6 +1,5 @@
 package src.view;
 
-import java.util.Scanner;
 import src.models.*;
 import java.util.*;
 import src.utils.Tuple;
@@ -13,9 +12,14 @@ public class InterfaceConsole implements InterfaceGenerale {
         this.scanner = new Scanner(System.in);
     }
 
+    // surchage method to allow Junit test to inject a scanner
+    public InterfaceConsole(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     public void afficherEtatJeu(GameModel modeleJeu) {
         System.out.println("\n======================== Etat du Jeu =========================");
-        for (int i = 0; i < modeleJeu.getJoueurs().size(); i++) {
+        for (int i = 0; i < modeleJeu.getPlayers().size(); i++) {
             PlayerModel joueur = modeleJeu.getJoueur(i);
             Monster monstreActif = joueur.getMonstreActif();
             System.out.println("Joueur " + (i + 1) + " (" + joueur.getNom() + "): ");
@@ -45,7 +49,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         }
     }
 
-    public src.models.Action obtenirActionJoueur(PlayerModel joueur) {
+    public Action obtenirActionJoueur(PlayerModel joueur) {
         System.out.println("Tour du joueur : "+ joueur.getNom() + " Choississez une action :");
         System.out.println("1 : Attaquer");
         System.out.println("2 : Utiliser un objet");
@@ -67,7 +71,29 @@ public class InterfaceConsole implements InterfaceGenerale {
         }
     }
 
-    private src.models.Action obtenirActionChangerMonstre(PlayerModel joueur) {
+    public List<MonsterModel> chooseMonsters(GameModel game, PlayerModel player) {
+        System.out.println(player.getNom() + " Choisissez 3 monstres parmis les monstres disponibles");
+        int cnt = 0;
+        List<MonsterModel> monsterSelection = new ArrayList<>();
+        do {
+            List<MonsterModel> monsterList = game.getMonstresDisponibles();
+            for (int j = 0; j < monsterList.size(); j++) {
+                System.out.println(j + " " + monsterList.get(j).getName());
+            }
+            int choice = scanner.nextInt();
+            while (choice >= monsterList.size() || choice < 0) {
+                System.out.println("Choisissez un monstre dans la liste");
+                choice = scanner.nextInt();
+            }
+            MonsterModel tmpMonster = monsterList.get(choice);
+            monsterList.remove(tmpMonster);
+            monsterSelection.add(tmpMonster); 
+            cnt ++;
+        } while (cnt < 3);
+        return monsterSelection;
+    }
+
+    private Action obtenirActionChangerMonstre(PlayerModel joueur) {
         System.out.println("Choisisez le monstre a utiliser :");
         for(int i = 0; i < joueur.getMonstres().size(); i++){
             System.out.println(" "+i +": "+ joueur.getMonstres().get(i).getNom());
@@ -77,7 +103,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         return new Action(ActionType.CHANGER_MONSTRE, indexMonstre);
     }
 
-    private src.models.Action obtenirActionObjet(PlayerModel joueur) {
+    private Action obtenirActionObjet(PlayerModel joueur) {
         System.out.println("Choisisez un objet :");
         for (int i = 0; i< joueur.getObjets().size(); i++){
             System.out.println(" "+i + ": " + joueur.getObjets().get(i).getNom());
@@ -87,7 +113,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         return new Action(ActionType.OBJET, indexObjet, joueur.getObjets().get(indexObjet));
     }
 
-    private src.models.Action obtenirActionAttaquer(PlayerModel joueur){
+    private Action obtenirActionAttaquer(PlayerModel joueur){
         Monster monstreActif = joueur.getMonstreActif();
         System.out.println("Choisisez une attaque :");
         for (int i = 0; i < monstreActif.getAttaques().size(); i++){

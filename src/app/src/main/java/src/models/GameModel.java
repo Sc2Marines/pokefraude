@@ -7,32 +7,27 @@ import java.util.List;
 public class GameModel {
     private List<PlayerModel> joueurs;
     private List<MonsterModel> monstresDisponibles;
-    private List<AttackModel> attaquesDisponibles;
+    private List<AttackModel> availableAttacks;
     private Terrain terrain;
 
 
-    public GameModel(List<MonsterModel> monstresDisponibles, List<AttackModel> attaquesDisponibles) {
+    public GameModel(List<MonsterModel> monstresDisponibles, List<AttackModel> availableAttacks) {
         this.joueurs = new ArrayList<>();
         this.monstresDisponibles = monstresDisponibles;
-        this.attaquesDisponibles = attaquesDisponibles;
+        this.availableAttacks = availableAttacks;
 
-        // Create 2 players with a default set of 3 random monsters
-        List<MonsterModel> monstresJoueur1 = new ArrayList<>();
-        List<MonsterModel> monstresJoueur2 = new ArrayList<>();
+
         if (monstresDisponibles.size() < 6) {
             System.err.println("Not enough monsters to create a game !");
             return;
         }
-        for (int i = 0; i < 3; i++) {
-            monstresJoueur1.add(monstresDisponibles.get(i));
-            monstresJoueur2.add(monstresDisponibles.get(i + 3));
-        }
-
-
-        joueurs.add(new PlayerModel("Joueur 1", monstresJoueur1, attaquesDisponibles));
-        joueurs.add(new PlayerModel("Joueur 2", monstresJoueur2, attaquesDisponibles));
         terrain = new Terrain();
+    }
 
+    public String addJoueur(PlayerModel player)
+    {
+        this.joueurs.add(player);
+        return "Joueur " + player.getNom() + " ajouté \n";
     }
 
     public PlayerModel getJoueur(int index) {
@@ -125,10 +120,10 @@ public class GameModel {
     }
 
     public List<AttackModel> getAttaquesDisponibles() {
-        return attaquesDisponibles;
+        return availableAttacks;
     }
 
-    public List<PlayerModel> getJoueurs() {
+    public List<PlayerModel> getPlayers() {
         return joueurs;
     }
 }

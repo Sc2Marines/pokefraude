@@ -13,12 +13,12 @@ import src.utils.Tuple;
 class ObjectsTest {
     private PlayerModel player;
     private List<MonsterModel> availableMonsters;
-    private List<AttackModel> attaquesDisponibles;
+    private List<AttackModel> availableAttacks;
 
     @BeforeEach
     void setUp() {
         availableMonsters = new ArrayList<>();
-        attaquesDisponibles = new ArrayList<>();
+        availableAttacks = new ArrayList<>();
 
         // Add some dummy data for testing
         MonsterModel pikachu = new MonsterModel("Pikachu", "Electric");
@@ -30,10 +30,12 @@ class ObjectsTest {
         cerapuca.populateStats(new int[]{120, 120}, new int[]{70, 70}, new int[]{65, 65}, new int[]{65, 65}, 0.03, 0.04, 0.02);
         availableMonsters.add(cerapuca);
 
-        attaquesDisponibles.add(new AttackModel("Eclair", "Electric", 40, 10, 0.07));
-        attaquesDisponibles.add(new AttackModel("Charge", "Normal", 35, 15, 0.03));
+        availableAttacks.add(new AttackModel("Eclair", "Electric", 40, 10, 0.07));
+        availableAttacks.add(new AttackModel("Charge", "Normal", 35, 15, 0.03));
 
-        player = new PlayerModel("Joueur 1", availableMonsters, attaquesDisponibles);
+        player = new PlayerModel("Joueur 1");
+        player.setMonsters(availableMonsters, availableAttacks);
+        
     }
 
     @Test
