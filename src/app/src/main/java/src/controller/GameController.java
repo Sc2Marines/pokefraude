@@ -4,19 +4,22 @@ import src.models.AttackModel;
 import src.models.GameModel;
 import src.models.MonsterModel;
 import src.models.PlayerModel;
-import src.utils.LecteurFichier;
+import src.utils.FileParser;
 import java.util.List;
 import src.view.*;
 public class GameController {
     private GameModel gameModel;
     private InterfaceGenerale interfaceConsole;
-    private LecteurFichier lecteurFichier;
+    private FileParser fileParser;
 
+    /**
+     * The constructor for the game controller.
+     */
     public GameController() {
-        lecteurFichier = new LecteurFichier();
+        fileParser = new FileParser();
         // Load monsters and attacks
-        List<MonsterModel> monstres = lecteurFichier.lireMonstres("./src/app/src/main/java/src/config/monsters.txt");
-        List<AttackModel> attacks = lecteurFichier.lireAttaques("./src/app/src/main/java/src/config/attacks.txt");
+        List<MonsterModel> monstres = fileParser.lireMonstres("./src/app/src/main/java/src/config/monsters.txt");
+        List<AttackModel> attacks = fileParser.lireAttaques("./src/app/src/main/java/src/config/attacks.txt");
 
         if (monstres == null || attacks == null) {
            System.err.println("Error loading monsters and attacks");
@@ -32,11 +35,15 @@ public class GameController {
         gameModel.addJoueur(p1);
         gameModel.addJoueur(p2);
     }
-    public void demarrer(){
+
+    /**
+     * The method to start the game.
+     */
+    public void start(){
         List<PlayerModel> players = gameModel.getPlayers();
         for (PlayerModel playerModel : players) {
             List<MonsterModel> playerMonsters= interfaceConsole.chooseMonsters(gameModel, playerModel);
-            playerModel.setMonsters(playerMonsters, gameModel.getAttacksDisponibles());
+            playerModel.setMonsters(playerMonsters, gameModel.getAvailableAttacks());
         }
 
         interfaceConsole.afficherEtatJeu(gameModel);
@@ -61,10 +68,5 @@ public class GameController {
             interfaceConsole.displayText("Match nul");
         }
 
-    }
-
-    public static void main(String[] args) {
-        GameController controleurJeu = new GameController();
-        controleurJeu.demarrer();
     }
 }

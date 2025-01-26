@@ -13,7 +13,7 @@ public class App {
 
     public static void main(String[] args) {
         GameController controlleur = new GameController();
-        controlleur.demarrer();
+        controlleur.start();
         System.out.println(new App().getGreeting());
     }
 }

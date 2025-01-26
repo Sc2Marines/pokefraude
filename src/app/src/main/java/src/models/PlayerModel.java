@@ -12,6 +12,10 @@ public class PlayerModel {
     private int monstreActifIndex;
     private List<ObjectModel> objets;
 
+    /**
+     * The default constructor for a player.
+     * @param name The name of the player.
+     */
     public PlayerModel(String name) {
         this.name = name;
         this.monsters = new ArrayList<>();
@@ -22,24 +26,47 @@ public class PlayerModel {
         ));
     }
 
+    /**
+     * set the player's monsters.
+     * @param monsters The list of monsters.
+     * @param availableAttacks The list of attacks.
+     */
     public void setMonsters(List<MonsterModel> monsters, List<AttackModel> availableAttacks) {
         for (MonsterModel monster : monsters) {
             this.monsters.add(new Monster(monster, availableAttacks));
         }
     }
 
+    /**
+     * Get the player's name.
+     * @return The player's name.
+     */
     public String getNom() {
         return name;
     }
 
+    /**
+     * The list of player's monsters
+     * @return The list of monsters
+     */
     public List<Monster> getMonstres() {
         return monsters;
     }
 
+    /**
+     * Get the currente active player's monster. 
+     * @return A monster
+     */
     public Monster getMonstreActif() {
         return monsters.get(monstreActifIndex);
     }
 
+    /**
+     * Change the current player's active monster.
+     * @param monstreIndex The index of the monster to set as the current monster.
+     * @param terrain The current terrain.
+     * @param actualEnnemyMonster The actual ennemy monster.
+     */
     public void changerMonstreActif(int monstreIndex, Terrain terrain, Monster actualEnnemyMonster) {
         if (monstreIndex >= 0 && monstreIndex < monsters.size()) {
             Monster activeMonster = this.getMonstreActif(); 
@@ -52,14 +79,29 @@ public class PlayerModel {
         }
     }
 
-    public String attack(PlayerModel defenseur, AttackModel attack, Terrain terrain) {
-        return getMonstreActif().attack(defenseur.getMonstreActif(), attack, terrain);
+    /**
+     * Attack method
+     * @param defender The defensive player
+     * @param attack The attack
+     * @param terrain The current terrain
+     * @return The attack result string.
+     */
+    public String attack(PlayerModel defender, AttackModel attack, Terrain terrain) {
+        return getMonstreActif().attack(defender.getMonstreActif(), attack, terrain);
     }
 
+    /**
+     * Get if the player is vainquish.
+     * @return If all the monsters are dead.
+     */
     public boolean estVaincu() {
         return monsters.stream().allMatch(monstre -> monstre.getPV() <= 0);
     }
 
+    /**
+     * Remove an object from the inventory.
+     * @param objet The object to remove.
+     */
     public void retirerObject(ObjectModel objet) {
         for (ObjectModel obj : this.objets) {
             if (obj.getType() == objet.getType()) {
@@ -69,6 +111,10 @@ public class PlayerModel {
         }
     }
 
+    /**
+     * Get all the objects count, must be used ro simplify the actions in any interface.
+     * @return The list of all objects aggregated by theirs types stored in a list of tuples.
+     */
     public List<Tuple<ObjectModel, Integer>> getObjectCount() {
         List<ObjectModel> playerObjects = this.getObjets();
         List<Tuple<ObjectModel, Integer>> listElements = new ArrayList<>();
@@ -89,6 +135,10 @@ public class PlayerModel {
         return listElements;
     }
 
+    /**
+     * Return the list of all objects owned by the player.
+     * @return The list of objects 
+     */
     public List<ObjectModel> getObjets() {
         return objets;
     }

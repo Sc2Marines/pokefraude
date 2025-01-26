@@ -75,7 +75,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         int cnt = 0;
         List<MonsterModel> monsterSelection = new ArrayList<>();
         do {
-            List<MonsterModel> monsterList = game.getMonstresDisponibles();
+            List<MonsterModel> monsterList = game.getAvailableMonsters();
             for (int j = 0; j < monsterList.size(); j++) {
                 System.out.println(j + " " + monsterList.get(j).getName());
             }
@@ -93,7 +93,7 @@ public class InterfaceConsole implements InterfaceGenerale {
     }
 
     private Action obtenirActionChangerMonstre(PlayerModel joueur) {
-        System.out.println("Choisisez le monstre a utiliser :");
+        System.out.println("Choisisez le monstre a use :");
         for (int i = 0; i < joueur.getMonstres().size(); i++) {
             System.out.println(" " + i + ": " + joueur.getMonstres().get(i).getNom());
         }

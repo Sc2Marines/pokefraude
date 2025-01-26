@@ -64,7 +64,7 @@ class ObjectsTest {
         activeMonster.appliquerEtat();
         activeMonster.takeDamages(25);
         // Use Potion
-        potion.utiliser(activeMonster);
+        potion.use(activeMonster);
         assertEquals(100, activeMonster.getPV(), "The monster's HP should be 100 after using a Potion.");
 
         // Remove Potion
@@ -72,7 +72,7 @@ class ObjectsTest {
         assertEquals(1, player.getObjets().size(), "The player should have exactly 1 object after removing the Potion.");
 
         // Use Medicament
-        medicament.utiliser(activeMonster);
+        medicament.use(activeMonster);
         assertEquals(true, activeMonster.aAucunEtat(), "The monster must have no effect.");
 
         // Remove Medicament

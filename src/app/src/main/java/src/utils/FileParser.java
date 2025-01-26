@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import src.models.AttackModel;
 import src.models.MonsterModel;
 
-public class LecteurFichier {
+public class FileParser {
 
     // Regex to extract data from the file
     private static final Pattern MONSTER_PATTERN = Pattern.compile("Monster.*?EndMonster", Pattern.DOTALL);
@@ -127,7 +127,7 @@ public class LecteurFichier {
     }
 
     public static void main(String[] args) {
-        LecteurFichier lecteur = new LecteurFichier();
+        FileParser lecteur = new FileParser();
         List<MonsterModel> monstres = lecteur.lireMonstres("src/app/src/main/java/src/monsters.txt");
         List<AttackModel> attacks = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
         if (monstres == null || attacks == null)
