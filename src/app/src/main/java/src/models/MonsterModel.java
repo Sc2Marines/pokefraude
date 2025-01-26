@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class MonsterModel {
     private String name;
-    private String type;
-    private String subType;
+    private Types type;
+    private Types subType;
     private int[] hp;
     private int[] speed;
     private int[] attack;
@@ -14,17 +14,84 @@ public class MonsterModel {
     private double flood;
     private double fall;
 
+    private static final String ELECTRIC = "Electric";
+    private static final String FIRE = "Fire";
+    private static final String WATER = "Water";
+    private static final String NATURE = "Nature";
+    private static final String DIRT = "Dirt";
+    private static final String PLANT = "Plant";
+    private static final String INSECT = "Insect";
+    
+    
+
+    /**
+     * COnstructor for this represnetation of the parsed monster.
+     * @param name The name of the monster.
+     * @param type The type of the monster
+     */
     public MonsterModel(String name, String type) {
         this.name = name;
-        this.subType = type;
-        if (this.subType.equals(Monster.PLANT) || this.subType.equals(Monster.INSECT)){
-            this.type = Monster.NATURE;
-        }
-        else {
-            this.type = type;
+        switch (type) {
+            case ELECTRIC:
+                this.type = Types.ELECTRIC;
+                this.subType = this.type;
+                break;
+            case FIRE:
+                this.type = Types.FIRE;
+                this.subType = this.type;
+                break;
+            case WATER:
+                this.type = Types.WATER;
+                this.subType = this.type;
+                break;
+            case NATURE:
+                this.type = Types.NATURE;
+                this.subType = this.type;
+                break;
+            case DIRT:
+                this.type = Types.DIRT;
+                this.subType = this.type;
+                break;
+            case PLANT:
+                this.type = Types.NATURE;
+                this.subType = Types.PLANT;
+                break;
+            case INSECT:
+                this.type = Types.NATURE;
+                this.subType = Types.INSECT;
+                break;
+            default:
+                break;
         }
     }
 
+    /**
+     * OverLoad to get the same result as the previous constructor but this time directly from Types and not string as type.
+     * @param name The name of the monster.
+     * @param type The type of the monster.
+     */
+    public MonsterModel(String name, Types type) {
+        this.name = name;
+        if (type == Types.PLANT || type == Types.INSECT) {
+            this.type = Types.NATURE;
+            this.subType = type;
+        }
+        else {
+            this.type = type;
+            this.subType = type;
+        }
+    }
+
+    /**
+     * Population method to fill monster stats.
+     * @param hp The monster's hp
+     * @param speed The monster's speed
+     * @param attack The monster's attack
+     * @param defense The monster's defense
+     * @param paralysis The monster's paralysis chance
+     * @param flood The monster's flood chance
+     * @param fall The monster's fall chance
+     */
     public void populateStats(int[] hp, int[] speed, int[] attack, int[] defense, double paralysis, double flood,
             double fall) {
         this.hp = hp;
@@ -37,6 +104,9 @@ public class MonsterModel {
     }
 
     @Override
+    /**
+     * Ovverided toString method;
+     */
     public String toString() {
         return "ModeleMonstre{" +
                 "name='" + name + '\'' +
@@ -51,47 +121,90 @@ public class MonsterModel {
                 '}';
     }
 
+    /**
+     * Get the monster's name.
+     * @return The name.
+     */
     public String getName() {
         return name;
     }
 
-    public String getType() {
+    /**
+     * Get the monster's type.
+     * @return The type.
+     */
+    public Types getType() {
         return type;
     }
 
-    public String getSubType() {
+    /**
+     * Get the monster's subtype.
+     * @return The subtype
+     */
+    public Types getSubType() {
         return subType;
     }
 
+    /**
+     * Get the monster's hp.
+     * @return The hp.
+     */
     public int[] getHp() {
         return hp;
     }
 
+    /**
+     * Get the monster's speed.
+     * @return The speed.
+     */
     public int[] getSpeed() {
         return speed;
     }
 
+    /**
+     * Get the monster's attack.
+     * @return The attack.
+     */
     public int[] getAttack() {
         return attack;
     }
 
+    /**
+     * Get the monster's defense.
+     * @return The defense.
+     */
     public int[] getDefense() {
         return defense;
     }
 
+    /**
+     * Get the monster's paralysis chance.
+     * @return The paralysis chance.
+     */
     public double getParalysis() {
         return paralysis;
     }
 
+    /**
+     * Get the monster's flood chance.
+     * @return The flood chance.
+     */
     public double getFlood() {
         return flood;
     }
 
+    /**
+     * Get the monster's fall chance.
+     * @return The fall chance.
+     */
     public double getFall() {
         return fall;
     }
 
     @Override
+    /**
+     * Overided method for junit testing purpose.
+     */
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -120,6 +233,9 @@ public class MonsterModel {
     }
 
     @Override
+    /**
+     * Overided method for junit testing purpose.
+     */
     public int hashCode() {
         int result;
         long temp;

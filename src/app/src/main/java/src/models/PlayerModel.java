@@ -67,7 +67,13 @@ public class PlayerModel {
      * @param terrain The current terrain.
      * @param actualEnnemyMonster The actual ennemy monster.
      */
-    public void changerMonstreActif(int monstreIndex, Terrain terrain, Monster actualEnnemyMonster) {
+    public void changerMonstreActif(Monster monstre, Terrain terrain, Monster actualEnnemyMonster) {
+        int monstreIndex = 0;
+        for (int i = 0; i < this.getMonstres().size(); i++) {
+            if (this.getMonstres().get(i).equals(monstre)) {
+                monstreIndex = i;
+            }
+        }
         if (monstreIndex >= 0 && monstreIndex < monsters.size()) {
             Monster activeMonster = this.getMonstreActif(); 
             activeMonster.setTriggerFlood(false);

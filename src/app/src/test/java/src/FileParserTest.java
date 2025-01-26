@@ -10,10 +10,10 @@ import java.util.List;
 
 import src.models.AttackModel;
 import src.models.MonsterModel;
-import src.utils.LecteurFichier;
+import src.utils.FileParser;
 
 class FileParserTest {
-    private LecteurFichier fileParser = new LecteurFichier();
+    private FileParser fileParser = new FileParser();
 
     private static final String MONSTERS = "Monster\n" + //
                 "Name Pikachu\n" + //

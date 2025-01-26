@@ -12,4 +12,5 @@ public interface InterfaceGenerale {
     public Action obtenirActionJoueur(PlayerModel player);
     public void displayText(String text);
     public List<MonsterModel> chooseMonsters(GameModel game, PlayerModel player);
+    public int getGameMode();
 }

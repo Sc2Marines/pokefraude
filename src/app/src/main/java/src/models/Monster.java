@@ -11,8 +11,8 @@ import src.utils.Tuple;
 
 public class Monster {
     private String name;
-    private String type;
-    private String subType;
+    private Types type;
+    private Types subType;
     private int pv;
     private int pvMax;
     private int attack;
@@ -34,41 +34,42 @@ public class Monster {
     private int turnParalyse = 0;
     private int turnHide = 0;
 
-    public static final String FOUDRE = "Electric";
-    public static final String FEU = "Fire";
-    public static final String EAU = "Water";
-    public static final String NATURE = "Nature";
-    public static final String TERRE = "Dirt";
-    public static final String PLANT = "Plant";
-    public static final String INSECT = "Insect";
+    private static final Types ELECTRIC = Types.ELECTRIC;
+    private static final Types FIRE = Types.FIRE;
+    private static final Types WATER = Types.WATER;
+    private static final Types NATURE = Types.NATURE;
+    private static final Types DIRT = Types.DIRT;
+    private static final Types PLANT = Types.PLANT;
+    @SuppressWarnings("unused")
+    private static final Types INSECT = Types.INSECT;
     // store advantages in a map (way more cleaner way to do it -> can be reused)
     // (Need to be automated in a txt file)
-    private static final Map<String, Map<String, Double>> TYPE_ADVANTAGES = new HashMap<>();
+    public static final Map<Types, Map<Types, Double>> TYPE_ADVANTAGES = new HashMap<>();
     static {
-        Map<String, Double> eauMap = new HashMap<>();
-        eauMap.put(FEU, 2.0);
-        eauMap.put(FOUDRE, 0.5);
-        TYPE_ADVANTAGES.put(EAU, eauMap);
+        Map<Types, Double> eauMap = new HashMap<>();
+        eauMap.put(FIRE, 2.0);
+        eauMap.put(ELECTRIC, 0.5);
+        TYPE_ADVANTAGES.put(WATER, eauMap);
 
-        Map<String, Double> feuMap = new HashMap<>();
+        Map<Types, Double> feuMap = new HashMap<>();
         feuMap.put(NATURE, 2.0);
-        feuMap.put(EAU, 0.5);
-        TYPE_ADVANTAGES.put(FEU, feuMap);
+        feuMap.put(WATER, 0.5);
+        TYPE_ADVANTAGES.put(FIRE, feuMap);
 
-        Map<String, Double> natureMap = new HashMap<>();
-        natureMap.put(TERRE, 2.0);
-        natureMap.put(FEU, 0.5);
+        Map<Types, Double> natureMap = new HashMap<>();
+        natureMap.put(DIRT, 2.0);
+        natureMap.put(FIRE, 0.5);
         TYPE_ADVANTAGES.put(NATURE, natureMap);
 
-        Map<String, Double> terreMap = new HashMap<>();
-        terreMap.put(FOUDRE, 2.0);
+        Map<Types, Double> terreMap = new HashMap<>();
+        terreMap.put(ELECTRIC, 2.0);
         terreMap.put(NATURE, 0.5);
-        TYPE_ADVANTAGES.put(TERRE, terreMap);
+        TYPE_ADVANTAGES.put(DIRT, terreMap);
 
-        Map<String, Double> foudreMap = new HashMap<>();
-        foudreMap.put(EAU, 2.0);
-        foudreMap.put(TERRE, 0.5);
-        TYPE_ADVANTAGES.put(FOUDRE, foudreMap);
+        Map<Types, Double> foudreMap = new HashMap<>();
+        foudreMap.put(WATER, 2.0);
+        foudreMap.put(DIRT, 0.5);
+        TYPE_ADVANTAGES.put(ELECTRIC, foudreMap);
     }
 
     // make the random truely random and compliant
@@ -100,7 +101,7 @@ public class Monster {
         Collections.shuffle(randomisedAttackList);
 
         for (AttackModel modelAttaque : randomisedAttackList) {
-            if (modelAttaque.getType().equals(this.type) || modelAttaque.getType().equals("Normal")) {
+            if (modelAttaque.getType() == this.type || modelAttaque.getType() == Types.NORMAL) {
                 // Create a deep copy of the AttackModel
                 AttackModel copiedAttack = new AttackModel(modelAttaque);
                 this.attacks.add(copiedAttack);
@@ -118,7 +119,7 @@ public class Monster {
         return name;
     }
 
-    public String getType() {
+    public Types getType() {
         return type;
     }
 
@@ -151,6 +152,10 @@ public class Monster {
         return attacks;
     }
 
+    private String damageStringGenerator(int damages) {
+        return this.name + " a subit " + damages + " dégats, il lui reste " + this.pv + " PV" + "\n";
+    }
+
     private String takeBurnDamage(Terrain terrain) {
         String result = "";
         if (terrain.getEtat().equals(Terrain.TypeTerrain.INONDE) && this.isBurned) {
@@ -158,7 +163,7 @@ public class Monster {
         } else {
             int damages = getAttaque() / 10;
             this.pv -= damages;
-            result = this.name + " a subit " + damages + " dégats, il lui reste " + this.pv + " PV" + "\n";
+            result = this.damageStringGenerator(damages);
         }
         return result;
     }
@@ -170,7 +175,7 @@ public class Monster {
         } else {
             int damages = getAttaque() / 10;
             this.pv -= damages;
-            result = this.name + " a subit " + damages + " dégats, il lui reste " + this.pv + " PV" + "\n";
+            result = this.damageStringGenerator(damages);
         }
         return result;
     }
@@ -268,8 +273,8 @@ public class Monster {
     }
 
     private double calculerAvantage(Monster target, AttackModel attack) {
-        String attackType = attack.getType();
-        String targetType = target.getType();
+        Types attackType = attack.getType();
+        Types targetType = target.getType();
 
         if (TYPE_ADVANTAGES.containsKey(attackType) && TYPE_ADVANTAGES.get(attackType).containsKey(targetType)) {
             return TYPE_ADVANTAGES.get(attackType).get(targetType);
@@ -279,24 +284,16 @@ public class Monster {
 
     private String appliquerEffetAttaque(Monster target, Terrain terrain, AttackModel attack) {
         String result = "";
-        switch (this.type) {
-            case FOUDRE:
-                result = paralyze(target);
-                break;
-            case EAU:
-                result = flood(terrain);
-                break;
-            case FEU:
-                result = burn(target);
-                break;
-            case TERRE:
-                result = hide(attack);
-                break;
-            case INSECT:
-                result = poison(target);
-                break;
-            default:
-                break;
+        if (this.type == Types.ELECTRIC) {
+            result = paralyze(target);
+        } else if (this.type == Types.WATER) {
+            result = flood(terrain);
+        } else if (this.type == Types.FIRE) {
+            result = burn(target);
+        } else if (this.type == Types.DIRT) {
+            result = hide(attack);
+        } else if (this.type == Types.INSECT) {
+            result = poison(target);
         }
         return result;
     }
@@ -349,7 +346,7 @@ public class Monster {
     private String fall(Terrain terrain, Monster target, AttackModel attack) {
         StringBuilder result = new StringBuilder();
         double randomNess = Math.random();
-        if (!this.type.equals(EAU) && terrain.getEtat() == Terrain.TypeTerrain.INONDE && randomNess < target.fall) {
+        if (!this.type.equals(WATER) && terrain.getEtat() == Terrain.TypeTerrain.INONDE && randomNess < target.fall) {
             result.append(this.takeDamages(this.calculerDegats(target, attack) / 4));
             result.append(this.name + " a chuté" + "\n");
             this.attackCancelled = true;
@@ -363,14 +360,14 @@ public class Monster {
         String result = "";
         if (!target.isPoisoned && !target.isBurned && !target.isParalyzed) {
             target.isParalyzed = true;
-            result = target.name + " est paralysé";
+            result = target.name + " est paralysé" + "\n";
         }
         return result;
     }
 
     private String hide(AttackModel attack) {
         String result = "";
-        if (attack.getType().equals(TERRE) && !this.isHide) {
+        if (attack.getType().equals(DIRT) && !this.isHide) {
             int randomNess = this.random.nextInt(1, 3);
             this.isHide = true;
             this.defense = this.defense * 2;
@@ -382,7 +379,7 @@ public class Monster {
 
     private String decrementHide() {
         String res = "";
-        if (this.getType().equals(TERRE)) {
+        if (this.getType().equals(DIRT)) {
             if (this.turnHide > 0) {
                 this.turnHide--;
             } else {

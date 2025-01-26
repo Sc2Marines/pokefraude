@@ -5,28 +5,25 @@ public class Action {
     private int index;
     private AttackModel attack;
     private ObjectModel objet;
-    private MonsterModel nouveauMonstre;
+    private Monster nouveauMonstre;
 
     public Action(ActionType type, int index) {
         this.type = type;
         this.index = index;
     }
 
-    public Action(ActionType type, int index, AttackModel attack) {
+    public Action(ActionType type, AttackModel attack) {
         this.type = type;
-        this.index = index;
         this.attack = attack;
     }
 
-    public Action(ActionType type, int index, ObjectModel objet) {
+    public Action(ActionType type, ObjectModel objet) {
         this.type = type;
-        this.index = index;
         this.objet = objet;
     }
 
-    public Action(ActionType type, int index, MonsterModel nouveauMonstre) {
+    public Action(ActionType type, Monster nouveauMonstre) {
         this.type = type;
-        this.index = index;
         this.nouveauMonstre = nouveauMonstre;
     }
 
@@ -46,7 +43,7 @@ public class Action {
         return objet;
     }
 
-    public MonsterModel getNouveauMonstre() {
+    public Monster getNouveauMonstre() {
         return nouveauMonstre;
     }
 }

@@ -2,7 +2,7 @@ package src.models;
 
 public class AttackModel {
     private String name;
-    private String type;
+    private Types type;
     private int power;
     private int nbUse;
     private double fail;
@@ -10,7 +10,35 @@ public class AttackModel {
 
     public AttackModel(String name, String type, int power, int nbUse, double fail) {
         this.name = name;
-        this.type = type;
+        switch (type) {
+            case "Normal":
+                this.type = Types.NORMAL;
+                break;
+            case "Electric":
+                this.type = Types.ELECTRIC;
+                break;
+            case "Fire" :
+                this.type = Types.FIRE;
+                break;
+            case "Water" : 
+                this.type = Types.WATER;
+                break;
+            case "Nature" :
+                this.type = Types.NATURE;
+                break;
+            case "Dirt" :
+                this.type = Types.DIRT;
+                break;
+            case "Plant" :
+                this.type = Types.PLANT;
+                break;
+            case "Insect" :
+                this.type = Types.INSECT;
+                break;
+            default:
+                this.type = Types.NORMAL;
+                break;
+        }
         this.power = power;
         this.nbUse = nbUse;
         this.fail = fail;
@@ -37,12 +65,11 @@ public class AttackModel {
                 '}';
     }
 
-
     public String getName() {
         return name;
     }
 
-    public String getType() {
+    public Types getType() {
         return type;
     }
 

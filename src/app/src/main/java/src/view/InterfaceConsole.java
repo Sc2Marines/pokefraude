@@ -2,7 +2,6 @@ package src.view;
 
 import src.models.*;
 import java.util.*;
-import src.utils.Tuple;
 
 public class InterfaceConsole implements InterfaceGenerale {
     private Scanner scanner;
@@ -92,6 +91,22 @@ public class InterfaceConsole implements InterfaceGenerale {
         return monsterSelection;
     }
 
+    /**
+     * Get the gamemode.
+     * @return The player choice.
+     */
+    public int getGameMode() {
+        System.out.println("Which gamemode do you want ? \n");
+        System.out.println("0: human vs human");
+        System.out.println("1: human vs bot");
+        int choice;
+        do {
+            System.out.println("make sure to select a valid option.");
+            choice = scanner.nextInt();
+        } while (choice < 0 || choice > 1);
+        return choice;
+    }
+
     private Action obtenirActionChangerMonstre(PlayerModel joueur) {
         System.out.println("Choisisez le monstre a use :");
         for (int i = 0; i < joueur.getMonstres().size(); i++) {
@@ -99,7 +114,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         }
         System.out.print("Votre monstre : ");
         int indexMonstre = scanner.nextInt();
-        return new Action(ActionType.CHANGER_MONSTRE, indexMonstre);
+        return new Action(ActionType.CHANGER_MONSTRE, joueur.getMonstres().get(indexMonstre));
     }
 
     private Action obtenirActionObjet(PlayerModel joueur) {
@@ -109,7 +124,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         }
         System.out.print("Votre objet : ");
         int indexObjet = scanner.nextInt();
-        return new Action(ActionType.OBJET, indexObjet, joueur.getObjets().get(indexObjet));
+        return new Action(ActionType.OBJET, joueur.getObjets().get(indexObjet));
     }
 
     private Action obtenirActionAttaquer(PlayerModel joueur) {
@@ -125,6 +140,6 @@ public class InterfaceConsole implements InterfaceGenerale {
             System.out.println("Choisissez une attack disponible !");
             indexAttaque = scanner.nextInt();
         }
-        return new Action(ActionType.ATTAQUE, indexAttaque, monstreActif.getAttacks().get(indexAttaque));
+        return new Action(ActionType.ATTAQUE, monstreActif.getAttacks().get(indexAttaque));
     }
 }
