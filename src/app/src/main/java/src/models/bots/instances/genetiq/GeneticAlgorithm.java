@@ -28,7 +28,7 @@ public class GeneticAlgorithm {
 
     private void initializePopulation() {
         for (int i = 0; i < populationSize; i++) {
-            double[] weights = new double[10]; // Example: 10 weights
+            double[] weights = new double[84]; // See why In genetiq.md
             for (int j = 0; j < weights.length; j++) {
                 weights[j] = random.nextDouble();
             }
