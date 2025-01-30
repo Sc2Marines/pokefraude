@@ -95,7 +95,7 @@ class MonsterSelectionTest {
         for (Monster monster : playerMonsters) {
             List<AttackModel> listAttacks = new ArrayList<>();
             for (AttackModel atk : availableAttacks) {
-                if (atk.getType().equals(monster.getType()) || atk.getType().equals("Normal")){
+                if (atk.getType().equals(monster.getType()) || atk.getType() == Types.NORMAL){
                     listAttacks.add(atk);
                 }
             }
