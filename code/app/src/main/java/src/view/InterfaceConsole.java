@@ -3,6 +3,8 @@ package src.view;
 import src.models.*;
 import java.util.*;
 
+import src.models.Action;
+
 public class InterfaceConsole implements InterfaceGenerale {
     private Scanner scanner;
 
@@ -56,13 +58,12 @@ public class InterfaceConsole implements InterfaceGenerale {
 
         int choix = -1;
         try {
-             choix = scanner.nextInt();
+            choix = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Erreur: Veuillez entrer un nombre valide.");
             scanner.next();
             return obtenirActionJoueur(joueur);
         }
-
 
         switch (choix) {
             case 1:
@@ -77,14 +78,15 @@ public class InterfaceConsole implements InterfaceGenerale {
         }
     }
 
-     public List<MonsterModel> chooseMonsters(GameModel game, PlayerModel player) {
+    public List<MonsterModel> chooseMonsters(GameModel game, PlayerModel player) {
         System.out.println(player.getNom() + " Choisissez 3 monstres parmis les monstres disponibles");
         int cnt = 0;
         List<MonsterModel> monsterSelection = new ArrayList<>();
-         List<MonsterModel> monsterListCopy = new ArrayList<>();
-          for (MonsterModel monster : game.getAvailableMonsters()) {
+        List<MonsterModel> monsterListCopy = new ArrayList<>();
+        for (MonsterModel monster : game.getAvailableMonsters()) {
             MonsterModel copy = new MonsterModel(monster.getName(), monster.getType());
-            copy.populateStats(monster.getHp(), monster.getSpeed(), monster.getAttack(), monster.getDefense(), monster.getParalysis(), monster.getFlood(), monster.getFall());
+            copy.populateStats(monster.getHp(), monster.getSpeed(), monster.getAttack(), monster.getDefense(),
+                    monster.getParalysis(), monster.getFlood(), monster.getFall());
             monsterListCopy.add(copy);
         }
         do {
@@ -92,9 +94,9 @@ public class InterfaceConsole implements InterfaceGenerale {
                 System.out.println(j + " " + monsterListCopy.get(j).getName());
             }
             int choice = -1;
-             try {
-                  choice = scanner.nextInt();
-             } catch (InputMismatchException e) {
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
                 System.out.println("Erreur: Veuillez entrer un nombre valide.");
                 scanner.next();
                 continue;
@@ -102,7 +104,7 @@ public class InterfaceConsole implements InterfaceGenerale {
             while (choice >= monsterListCopy.size() || choice < 0) {
                 System.out.println("Choisissez un monstre dans la liste");
                 try {
-                      choice = scanner.nextInt();
+                    choice = scanner.nextInt();
                 } catch (InputMismatchException e) {
                     System.out.println("Erreur: Veuillez entrer un nombre valide.");
                     scanner.next();
@@ -119,20 +121,21 @@ public class InterfaceConsole implements InterfaceGenerale {
 
     /**
      * Get the gamemode.
+     * 
      * @return The player choice.
      */
-     public int getGameMode() {
+    public int getGameMode() {
         System.out.println("Which gamemode do you want ? \n");
         System.out.println("0: human vs human");
         System.out.println("1: human vs bot");
         int choice = -1;
         do {
             System.out.println("make sure to select a valid option.");
-             try {
-                  choice = scanner.nextInt();
-             } catch (InputMismatchException e) {
+            try {
+                choice = scanner.nextInt();
+            } catch (InputMismatchException e) {
                 System.out.println("Erreur: Veuillez entrer un nombre valide.");
-                 scanner.next();
+                scanner.next();
                 continue;
             }
         } while (choice < 0 || choice > 1);
@@ -140,7 +143,7 @@ public class InterfaceConsole implements InterfaceGenerale {
     }
 
     private Action obtenirActionChangerMonstre(PlayerModel joueur) {
-         System.out.println("Choisisez le monstre a utiliser :");
+        System.out.println("Choisisez le monstre a utiliser :");
         List<Monster> monstres = joueur.getMonstres();
         for (int i = 0; i < monstres.size(); i++) {
             if (monstres.get(i).getPV() > 0) {
@@ -150,7 +153,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         System.out.print("Votre monstre : ");
         int indexMonstre = -1;
         try {
-             indexMonstre = scanner.nextInt();
+            indexMonstre = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Erreur: Veuillez entrer un nombre valide.");
             scanner.next();
@@ -177,7 +180,7 @@ public class InterfaceConsole implements InterfaceGenerale {
         System.out.print("Votre objet : ");
         int indexObjet = -1;
         try {
-             indexObjet = scanner.nextInt();
+            indexObjet = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Erreur: Veuillez entrer un nombre valide.");
             scanner.next();
@@ -195,21 +198,22 @@ public class InterfaceConsole implements InterfaceGenerale {
         }
         System.out.print("Votre attack : ");
         int indexAttaque = -1;
-         try {
-              indexAttaque = scanner.nextInt();
-         } catch (InputMismatchException e) {
+        try {
+            indexAttaque = scanner.nextInt();
+        } catch (InputMismatchException e) {
             System.out.println("Erreur: Veuillez entrer un nombre valide.");
-             scanner.next();
+            scanner.next();
             return obtenirActionAttaquer(joueur);
         }
-        while (indexAttaque < 0 || indexAttaque >= monstreActif.getAttacks().size() || !monstreActif.getAttacks().get(indexAttaque).isAttackAvailable()) {
+        while (indexAttaque < 0 || indexAttaque >= monstreActif.getAttacks().size()
+                || !monstreActif.getAttacks().get(indexAttaque).isAttackAvailable()) {
             System.out.println("Choisissez une attack disponible !");
-             try {
-                  indexAttaque = scanner.nextInt();
-             } catch (InputMismatchException e) {
+            try {
+                indexAttaque = scanner.nextInt();
+            } catch (InputMismatchException e) {
                 System.out.println("Erreur: Veuillez entrer un nombre valide.");
                 scanner.next();
-                 continue;
+                continue;
             }
         }
         return new Action(ActionType.ATTAQUE, monstreActif.getAttacks().get(indexAttaque));
