@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="src.MonsterSelectionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-01-30T21:32:18" hostname="alex-laptop" time="0.016">
+  <properties/>
+  <testcase name="testMonsterSelection()" classname="src.MonsterSelectionTest" time="0.012"/>
+  <testcase name="testSetMonsters()" classname="src.MonsterSelectionTest" time="0.002"/>
+  <system-out><![CDATA[Joueur 1 Choisissez 3 monstres parmis les monstres disponibles
+0 Pikachu
+1 Cerapuca
+2 Charizard
+0 Cerapuca
+1 Charizard
+0 Cerapuca
+Joueur 1 Choisissez 3 monstres parmis les monstres disponibles
+0 Pikachu
+1 Cerapuca
+2 Charizard
+0 Pikachu
+1 Cerapuca
+0 Cerapuca
+]]></system-out>
+  <system-err><![CDATA[Not enough monsters to create a game !
+Not enough monsters to create a game !
+]]></system-err>
+</testsuite>

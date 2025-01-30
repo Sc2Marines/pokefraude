@@ -1,0 +1,42 @@
+Attack
+Name Eclair
+Type Electric
+Power 40
+NbUse 10
+Fail 0.07
+EndAttack
+Attack
+Name Charge
+Type Normal
+Power 35
+NbUse 15
+Fail 0.03
+EndAttack
+Attack
+Name Tramblement_De_Terre
+Type Dirt
+Power 30
+NbUse 10
+Fail 0.01
+EndAttack
+Attack
+Name Lianes
+Type Plant
+Power 20
+NbUse 20
+Fail 0.06
+EndAttack
+Attack
+Name Meteore
+Type Fire
+Power 60
+NbUse 4
+Fail 0.10
+EndAttack
+Attack
+Name Nuee_de_sauterelles
+Type Insect
+Power 66
+NbUse 10
+Fail 0.55
+EndAttack
