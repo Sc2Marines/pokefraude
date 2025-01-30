@@ -24,6 +24,11 @@ dependencies {
     implementation 'com.google.guava:guava:31.1-jre'
 }
 
+run {
+    standardInput = System.in
+}
+    
+
 application {
     // Define the main class for the application.
     mainClass = 'src.App'

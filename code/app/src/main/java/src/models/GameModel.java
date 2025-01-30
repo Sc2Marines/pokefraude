@@ -1,6 +1,5 @@
 package src.models;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +50,13 @@ public class GameModel {
      * @return The result's string.
      */
     private String executeAnteActions(){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         this.terrain.decrement();
         for (PlayerModel player : joueurs) {
-            Monster monster = player.getMonstreActif();
-            result = monster.beforeTurnEffects(terrain);
+           Monster monster = player.getMonstreActif();
+           result.append(monster.beforeTurnEffects(terrain));
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -65,12 +64,12 @@ public class GameModel {
      * @return The result's string.
      */
     private String executePostActions(){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (PlayerModel player : joueurs) {
             Monster monster = player.getMonstreActif();
-            result = monster.afterTurnEffects(terrain);
+            result.append(monster.afterTurnEffects(terrain));
         }
-        return result;
+        return result.toString();
     }
 
     /**
@@ -83,15 +82,18 @@ public class GameModel {
         
         StringBuilder result = new StringBuilder();
         result.append(this.executeAnteActions());
-        // Execute changes of monsters
+        
+        // Execute changes of monsters with initiative bypass
         if (actionJoueur1.getType() == ActionType.CHANGER_MONSTRE) {
             Monster player2Monster = joueurs.get(1).getMonstreActif();
             joueurs.get(0).changerMonstreActif(actionJoueur1.getNouveauMonstre(), terrain, player2Monster);
+            
         }
         if (actionJoueur2.getType() == ActionType.CHANGER_MONSTRE) {
             Monster player1Monster = joueurs.get(0).getMonstreActif();
             joueurs.get(1).changerMonstreActif(actionJoueur2.getNouveauMonstre(), terrain, player1Monster);
         }
+
         // Execute objets
         if (actionJoueur1.getType() == ActionType.OBJET && actionJoueur1.getObjet() != null) {
                 result.append(actionJoueur1.getObjet().use(joueurs.get(0).getMonstreActif()));
@@ -130,15 +132,19 @@ public class GameModel {
      */
     private String attack(PlayerModel attaquant, PlayerModel defender, AttackModel attackAttaquant, AttackModel attackDefenseur) {
         StringBuilder result = new StringBuilder();
-        if (attackAttaquant != null) {
-            result.append(attaquant.attack(defender, attackAttaquant, terrain));
-        } else {
-            result.append(attaquant.getMonstreActif().takeDamages(10));
+        Monster attaquantMonster = attaquant.getMonstreActif();
+        Monster defenderMonster = defender.getMonstreActif();
+
+        if (attaquantMonster.getPV() > 0 && attackAttaquant != null) {
+                result.append(attaquant.attack(defender, attackAttaquant, terrain));
+        } else if (attaquantMonster.getPV() > 0) {
+            result.append(attaquantMonster.takeDamages(10));
         }
-        if (attackDefenseur != null) {
-            result.append(defender.attack(attaquant, attackDefenseur, terrain));
-        } else {
-            result.append(defender.getMonstreActif().takeDamages(10));
+
+        if (defenderMonster.getPV() > 0 && attackDefenseur != null) {
+                result.append(defender.attack(attaquant, attackDefenseur, terrain));
+        } else if (defenderMonster.getPV() > 0) {
+            result.append(defenderMonster.takeDamages(10));
         }
         return result.toString();
     }

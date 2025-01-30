@@ -49,14 +49,18 @@ To run the game, use the following command:
 
 - On Windows:
   ```cmd
-  gradlew.bat run
+  gradlew.bat clean build run --console=plain
   ```
 - On Unix-based systems (Linux, macOS):
   ```sh
-  ./gradlew run
+  /gradlew clean build run --console=plain
   ```
 
 This command launches the application using the `run` task defined in the `build.gradle` file.
+
+## Tests 
+
+If any tests is preventing you to run the app you can stille delete thems.
 
 ## Project Structure
 

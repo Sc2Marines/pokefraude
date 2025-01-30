@@ -7,8 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import src.models.*;
 import src.view.InterfaceConsole;
@@ -93,13 +95,14 @@ class MonsterSelectionTest {
 
         // Verify that the monsters have the correct attacks
         for (Monster monster : playerMonsters) {
-            List<AttackModel> listAttacks = new ArrayList<>();
+            Set<AttackModel> expectedAttacks = new HashSet<>();
             for (AttackModel atk : availableAttacks) {
-                if (atk.getType().equals(monster.getType()) || atk.getType().equals("Normal")){
-                    listAttacks.add(atk);
+                if (atk.getType().equals(monster.getType()) || atk.getType() == Types.NORMAL) {
+                    expectedAttacks.add(atk);
                 }
             }
-            assertEquals(listAttacks, monster.getAttacks(), "The monster should have the correct list of attacks.");
+            Set<AttackModel> actualAttacks = new HashSet<>(monster.getAttacks());
+            assertEquals(expectedAttacks, actualAttacks, "The monster should have the correct set of attacks.");
         }
     }
 }

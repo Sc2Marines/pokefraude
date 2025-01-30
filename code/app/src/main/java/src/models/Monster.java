@@ -101,12 +101,12 @@ public class Monster {
         Collections.shuffle(randomisedAttackList);
 
         for (AttackModel modelAttaque : randomisedAttackList) {
-            if (modelAttaque.getType() == this.type || modelAttaque.getType() == Types.NORMAL) {
+             if (modelAttaque.getType() == this.type || modelAttaque.getType() == Types.NORMAL) {
                 // Create a deep copy of the AttackModel
                 AttackModel copiedAttack = new AttackModel(modelAttaque);
-                this.attacks.add(copiedAttack);
+                 this.attacks.add(copiedAttack);
                 if (this.attacks.size() == 4)
-                    break;
+                     break;
             }
         }
     }
@@ -190,12 +190,12 @@ public class Monster {
         return result;
     }
 
-    private String healing() {
+     public String healing() {
         String result = "";
-        if (this.type.equals(NATURE) && this.subType.equals(PLANT) && Math.random() < 0.3) {
+         if (this.type.equals(NATURE) && this.subType.equals(PLANT) && Math.random() < 0.3) {
             this.isBurned = false;
             this.isParalyzed = false;
-            this.isPoisoned = false;
+             this.isPoisoned = false;
             result = this.name + " s'est débarrassé de ses altérations d'état" + "\n";
         }
         return result;
@@ -229,6 +229,9 @@ public class Monster {
 
     public String attack(Monster target, AttackModel attack, Terrain terrain) {
         StringBuilder result = new StringBuilder();
+         if (this.pv <= 0) {
+            return result.toString();
+        }
         Tuple<Boolean, String> paralyze = estSortiParalysie();
         result.append(paralyze.getSecond());
         result.append(this.fall(terrain, target, attack));
@@ -307,8 +310,9 @@ public class Monster {
     }
 
     public String guerir() {
-        this.isPoisoned = false;
+         this.isPoisoned = false;
         this.isParalyzed = false;
+        this.isBurned = false;
         return name + " est guerri de ses effets de status" + "\n";
     }
 

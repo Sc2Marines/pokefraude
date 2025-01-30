@@ -20,8 +20,8 @@ public class GameController {
     public GameController() {
         fileParser = new FileParser();
         // Load monsters and attacks
-        List<MonsterModel> monstres = fileParser.lireMonstres("./src/app/src/main/java/src/config/monsters.txt");
-        List<AttackModel> attacks = fileParser.lireAttaques("./src/app/src/main/java/src/config/attacks.txt");
+        List<MonsterModel> monstres = fileParser.lireMonstres("config/monsters.txt");
+        List<AttackModel> attacks = fileParser.lireAttaques("config/attacks.txt");
 
         if (monstres == null || attacks == null) {
            System.err.println("Error loading monsters and attacks");
