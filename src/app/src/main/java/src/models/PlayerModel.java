@@ -31,11 +31,12 @@ public class PlayerModel {
      * @param monsters The list of monsters.
      * @param availableAttacks The list of attacks.
      */
-    public void setMonsters(List<MonsterModel> monsters, List<AttackModel> availableAttacks) {
-        for (MonsterModel monster : monsters) {
-            this.monsters.add(new Monster(monster, availableAttacks));
+     public void setMonsters(List<MonsterModel> monsters, List<AttackModel> availableAttacks) {
+        for (MonsterModel monsterModel : monsters) {
+            this.monsters.add(new Monster(monsterModel, availableAttacks));
         }
     }
+
 
     /**
      * Get the player's name.
@@ -58,6 +59,17 @@ public class PlayerModel {
      * @return A monster
      */
     public Monster getMonstreActif() {
+        if (monsters.isEmpty())
+            return null;
+        
+        if (monsters.get(monstreActifIndex).getPV() <= 0) {
+            for (int i = 0; i < monsters.size(); i++) {
+                if (monsters.get(i).getPV() > 0) {
+                    monstreActifIndex = i;
+                    break;
+                }
+            }
+        }
         return monsters.get(monstreActifIndex);
     }
 
@@ -74,14 +86,13 @@ public class PlayerModel {
                 monstreIndex = i;
             }
         }
-        if (monstreIndex >= 0 && monstreIndex < monsters.size()) {
+        if (monstreIndex >= 0 && monstreIndex < monsters.size() && monsters.get(monstreIndex).getPV() > 0) {
             Monster activeMonster = this.getMonstreActif(); 
             activeMonster.setTriggerFlood(false);
             if (activeMonster.haveTriggerFlood() && !actualEnnemyMonster.haveTriggerFlood()){
                 terrain.modify(TypeTerrain.NORMAL);
             }
             this.monstreActifIndex = monstreIndex;
-            
         }
     }
 

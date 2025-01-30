@@ -128,8 +128,8 @@ public class FileParser {
 
     public static void main(String[] args) {
         FileParser lecteur = new FileParser();
-        List<MonsterModel> monstres = lecteur.lireMonstres("src/app/src/main/java/src/monsters.txt");
-        List<AttackModel> attacks = lecteur.lireAttaques("src/app/src/main/java/src/attacks.txt");
+        List<MonsterModel> monstres = lecteur.lireMonstres("./app/src/main/java/src/config/monsters.txt");
+        List<AttackModel> attacks = lecteur.lireAttaques("./app/src/main/java/src/config/attacks.txt");
         if (monstres == null || attacks == null)
             return;
         for (MonsterModel monstre : monstres) {
