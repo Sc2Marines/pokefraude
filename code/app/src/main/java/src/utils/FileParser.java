@@ -3,6 +3,8 @@ package src.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -82,6 +84,21 @@ public class FileParser {
 
     private String readFile(String filePath) {
         StringBuilder content = new StringBuilder();
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            return content.toString();
+        } catch (IOException e) {
+            System.err.println("Error while reading file :" + filePath);
+            return null;
+        }
+    }
+
+    private String readFileDirect(String filePath) {
+        StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -92,6 +109,54 @@ public class FileParser {
             System.err.println("Error while reading file :" + filePath);
             return null;
         }
+    }
+    
+    public List<MonsterModel> lireMonstresDirect(String filePath) {
+        List<MonsterModel> monstres = new ArrayList<>();
+        String fileContent = readFileDirect(filePath);
+        if (fileContent == null)
+            return Collections.emptyList();
+    
+        Matcher matcher = MONSTER_PATTERN.matcher(fileContent);
+        while (matcher.find()) {
+            String monsterData = matcher.group();
+    
+            String name = extractValue(monsterData, NAME_PATTERN);
+            String type = extractValue(monsterData, TYPE_PATTERN);
+            int[] hp = extractValueIntArray(monsterData, HP_PATTERN);
+            int[] speed = extractValueIntArray(monsterData, SPEED_PATTERN);
+            int[] attack = extractValueIntArray(monsterData, ATTACK_PATTERN_PARAMS);
+            int[] defense = extractValueIntArray(monsterData, DEFENSE_PATTERN);
+            double paralysis = extractValueDouble(monsterData, PARALYSIS_PATTERN);
+            double flood = extractValueDouble(monsterData, FLOOD_PATTERN);
+            double fall = extractValueDouble(monsterData, FALL_PATTERN);
+    
+            MonsterModel tmpMonstre = new MonsterModel(name, type);
+            tmpMonstre.populateStats(hp, speed, attack, defense, paralysis, flood, fall);
+            monstres.add(tmpMonstre);
+        }
+        return monstres;
+    }
+    
+    public List<AttackModel> lireAttaquesDirect(String filePath) {
+        List<AttackModel> attacks = new ArrayList<>();
+        String fileContent = readFileDirect(filePath);
+        if (fileContent == null)
+            return Collections.emptyList();
+    
+        Matcher matcher = ATTACK_PATTERN.matcher(fileContent);
+        while (matcher.find()) {
+            String attackData = matcher.group();
+    
+            String name = extractValue(attackData, NAME_PATTERN);
+            String type = extractValue(attackData, TYPE_PATTERN);
+            int power = extractValueInt(attackData, POWER_PATTERN);
+            int nbUse = extractValueInt(attackData, NBUSE_PATTERN);
+            double fail = extractValueDouble(attackData, FAIL_PATTERN_PARAMS);
+    
+            attacks.add(new AttackModel(name, type, power, nbUse, fail));
+        }
+        return attacks;
     }
 
     private String extractValue(String data, Pattern pattern) {
@@ -125,19 +190,4 @@ public class FileParser {
         }
         return new int[] { 0, 0 };
     }
-
-    public static void main(String[] args) {
-        FileParser lecteur = new FileParser();
-        List<MonsterModel> monstres = lecteur.lireMonstres("/src/main/java/src/config/monsters.txt");
-        List<AttackModel> attacks = lecteur.lireAttaques("/src/main/java/src/config/attacks.txt");
-        if (monstres == null || attacks == null)
-            return;
-        for (MonsterModel monstre : monstres) {
-            System.out.println(monstre);
-        }
-        for (AttackModel attack : attacks) {
-            System.out.println(attack);
-        }
-    }
-
 }

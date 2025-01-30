@@ -59,7 +59,7 @@ class FileParserTest {
             writer.write(MONSTERS);
         }
 
-        List<MonsterModel> monsters = fileParser.lireMonstres(tempFile.getAbsolutePath());
+        List<MonsterModel> monsters = fileParser.lireMonstresDirect(tempFile.getAbsolutePath());
 
         assertNotNull(monsters, "The list of mosnters must not be zero.");
         assertEquals(2, monsters.size(), "The list must contain exactly 2 monsters.");
@@ -85,7 +85,7 @@ class FileParserTest {
 
 
         
-        List<AttackModel> attacks = fileParser.lireAttaques(tempFile.getAbsolutePath());
+        List<AttackModel> attacks = fileParser.lireAttaquesDirect(tempFile.getAbsolutePath());
         assertNotNull(attacks, "The list of attacks does not have to be zero.");
         assertEquals(2, attacks.size(), "The list must contain exactly 2 attacks.");
 
