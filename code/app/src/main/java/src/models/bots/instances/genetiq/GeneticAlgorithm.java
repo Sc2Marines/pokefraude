@@ -12,6 +12,7 @@ import src.models.Monster;
 import src.models.MonsterModel;
 import src.models.PlayerModel;
 import src.models.Action;
+import src.models.bots.models.GameReportModel;
 
 public class GeneticAlgorithm {
     private List<Strategy> population;
@@ -59,11 +60,12 @@ public class GeneticAlgorithm {
 
         bot.setMonsters(botMonsters, gameModel.getAvailableAttacks());
         opponent.setMonsters(opponentMonsters, gameModel.getAvailableAttacks());
-
+        GameReportModel report = new GameReportModel(bot, gameModel);
         // Play the game
         while (!gameModel.estTermine()) {
-            Action botAction = getActionForStrategy(bot, strategy);
-            Action opponentAction = getActionForStrategy(opponent, opponentStrategy);
+            report.generateReport();
+            Action botAction = getActionForStrategy(bot, strategy, report);
+            Action opponentAction = getActionForStrategy(opponent, opponentStrategy, report);
 
             gameModel.executerActions(botAction, opponentAction);
         }
@@ -97,13 +99,18 @@ public class GeneticAlgorithm {
         return chosenMonsters;
     }
 
-    private Action getActionForStrategy(PlayerModel player, Strategy strategy) {
+    private Action getActionForStrategy(PlayerModel player, Strategy strategy, GameReportModel gameReport) {
+        linkWeights(gameReport);
         // Implement action selection logic based on the strategy
         // For simplicity, we can use a random selection for now
         Monster actualMonster = player.getMonstreActif();
         List<AttackModel> attacks = actualMonster.getAttacks();
         int index = (int) (strategy.getWeights()[3] * attacks.size());
         return new Action(ActionType.ATTAQUE, attacks.get(index));
+    }
+
+    private void linkWeights(GameReportModel gameReport) {
+
     }
 
     public List<Strategy> selectBestStrategies() {

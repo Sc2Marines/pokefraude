@@ -51,6 +51,11 @@ public class Terrain {
     public TypeTerrain getEtat() {
         return etat;
     }
+
+    public int getTurnLeftBeforeNormal() {
+        return this.turnLeftBeforeNormal;
+    }
+
     /**
      * Enum of all the possible terrain states.
      */
