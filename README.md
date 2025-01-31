@@ -154,4 +154,4 @@ pocket-monster/
 
 Here is the UML for our final project:
 
-![[plaintuml.png]]
+![Alternative text](plaintuml.png)
