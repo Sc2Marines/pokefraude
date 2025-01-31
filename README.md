@@ -150,3 +150,8 @@ pocket-monster/
 │       └── build/                              # Build output directory
 └── README.md                                   # This file
 ```
+## Project UML
+
+Here is the UML for our final project:
+
+![[plaintuml.png]]
