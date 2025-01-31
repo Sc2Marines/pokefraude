@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="src.MonsterSelectionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-01-30T18:51:56" hostname="DESKTOP-0JD41QQ" time="0.014">
+  <properties/>
+  <testcase name="testMonsterSelection()" classname="src.MonsterSelectionTest" time="0.011"/>
+  <testcase name="testSetMonsters()" classname="src.MonsterSelectionTest" time="0.003"/>
+  <system-out><![CDATA[Joueur 1 Choisissez 3 monstres parmis les monstres disponibles
+0 Pikachu
+1 Cerapuca
+2 Charizard
+3 Bulbasaur
+4 Squirtle
+5 Geodude
+0 Cerapuca
+1 Charizard
+2 Bulbasaur
+3 Squirtle
+4 Geodude
+0 Cerapuca
+1 Bulbasaur
+2 Squirtle
+3 Geodude
+Joueur 1 Choisissez 3 monstres parmis les monstres disponibles
+0 Pikachu
+1 Cerapuca
+2 Charizard
+3 Bulbasaur
+4 Squirtle
+5 Geodude
+0 Pikachu
+1 Cerapuca
+2 Bulbasaur
+3 Squirtle
+4 Geodude
+0 Cerapuca
+1 Bulbasaur
+2 Squirtle
+3 Geodude
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

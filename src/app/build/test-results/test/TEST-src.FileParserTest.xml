@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="src.FileParserTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-01-30T18:51:56" hostname="DESKTOP-0JD41QQ" time="0.009">
+  <properties/>
+  <testcase name="AttaquesParsedSUccessfully()" classname="src.FileParserTest" time="0.005"/>
+  <testcase name="MonsterParseSuccessfully()" classname="src.FileParserTest" time="0.003"/>
+  <system-out><![CDATA[All assertions are passed, the test is successful.
+All assertions are passed, the test is successful.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

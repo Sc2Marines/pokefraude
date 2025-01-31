@@ -1,0 +1,34 @@
+4All assertions are passed, the test is successful.
+4All assertions are passed, the test is successful.
+@Joueur 1 Choisissez 3 monstres parmis les monstres disponibles
+0 Pikachu
+1 Cerapuca
+2 Charizard
+3 Bulbasaur
+4 Squirtle
+5 Geodude
+0 Cerapuca
+1 Charizard
+2 Bulbasaur
+3 Squirtle
+4 Geodude
+0 Cerapuca
+1 Bulbasaur
+2 Squirtle
+3 Geodude
+@Joueur 1 Choisissez 3 monstres parmis les monstres disponibles
+0 Pikachu
+1 Cerapuca
+2 Charizard
+3 Bulbasaur
+4 Squirtle
+5 Geodude
+0 Pikachu
+1 Cerapuca
+2 Bulbasaur
+3 Squirtle
+4 Geodude
+0 Cerapuca
+1 Bulbasaur
+2 Squirtle
+3 Geodude
